@@ -92,7 +92,7 @@ public class ArrowItemCoFH extends ArrowItem implements ICoFHItem {
     @Override
     public boolean isInfinite(ItemStack stack, ItemStack bow, PlayerEntity player) {
 
-        return infinitySupport && getItemEnchantmentLevel(Enchantments.INFINITY, bow) > 0;
+        return infinitySupport && getItemEnchantmentLevel(Enchantments.INFINITY, bow) > 0 || super.isInfinite(stack, bow, player);
     }
 
     // region FACTORY

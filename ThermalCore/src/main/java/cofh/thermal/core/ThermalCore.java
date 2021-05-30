@@ -47,7 +47,7 @@ import static cofh.thermal.lib.common.ThermalFlags.*;
 public class ThermalCore {
 
     public static final Logger LOG = LogManager.getLogger(ID_THERMAL);
-    public static final ThermalProxy PROXY = DistExecutor.safeRunForDist(() -> ThermalProxyClient::new, () -> ThermalProxy::new);
+    public static final ThermalProxy PROXY = DistExecutor.unsafeRunForDist(() -> ThermalProxyClient::new, () -> ThermalProxy::new);
 
     public static final DeferredRegisterCoFH<Block> BLOCKS = DeferredRegisterCoFH.create(ForgeRegistries.BLOCKS, ID_THERMAL);
     public static final DeferredRegisterCoFH<Item> ITEMS = DeferredRegisterCoFH.create(ForgeRegistries.ITEMS, ID_THERMAL);

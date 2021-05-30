@@ -46,9 +46,9 @@ import static cofh.lib.util.references.CoreReferences.TILE_ITEM_FILTER_CONTAINER
 @Mod(ID_COFH_CORE)
 public class CoFHCore {
 
-    public static final Logger LOG = LogManager.getLogger(ID_COFH_CORE);
     public static final PacketHandler PACKET_HANDLER = new PacketHandler(new ResourceLocation(ID_COFH_CORE, "general"));
-    public static final Proxy PROXY = DistExecutor.safeRunForDist(() -> ProxyClient::new, () -> Proxy::new);
+    public static final Logger LOG = LogManager.getLogger(ID_COFH_CORE);
+    public static final Proxy PROXY = DistExecutor.unsafeRunForDist(() -> ProxyClient::new, () -> Proxy::new);
 
     public static final DeferredRegisterCoFH<Block> BLOCKS = DeferredRegisterCoFH.create(ForgeRegistries.BLOCKS, ID_COFH_CORE);
     public static final DeferredRegisterCoFH<Fluid> FLUIDS = DeferredRegisterCoFH.create(ForgeRegistries.FLUIDS, ID_COFH_CORE);

@@ -128,14 +128,16 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
             LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING_FISH);
             LootContext.Builder contextBuilder = new LootContext.Builder((ServerWorld) world).withRandom(world.rand);
 
-            boolean caught = false;
+            int caught = 0;
             for (int i = 0; i < baseMod; ++i) {
                 for (ItemStack stack : table.generate(contextBuilder.build(LootParameterSets.EMPTY))) {
-                    caught |= InventoryHelper.insertStackIntoInventory(internalHandler, stack, false).isEmpty();
+                    if(InventoryHelper.insertStackIntoInventory(internalHandler, stack, false).isEmpty()) {
+                        ++caught;
+                    }
                 }
             }
-            if (xpStorageFeature && caught) {
-                xpStorage.receiveXp(1 + world.rand.nextInt(3), false);
+            if (xpStorageFeature && caught > 0) {
+                xpStorage.receiveXp(caught + world.rand.nextInt(3 * caught), false);
             }
         }
     }
@@ -158,7 +160,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         for (BlockPos scan : area) {
             FluidState state = world.getFluidState(scan);
             if (state.getFluid().equals(Fluids.WATER)) {
-                constant -= 20;
+                constant -= 40;
             }
         }
         boolean isOcean = Utils.hasBiomeType(world, pos, BiomeDictionary.Type.OCEAN);

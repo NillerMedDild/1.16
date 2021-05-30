@@ -26,7 +26,7 @@ public class XpHelper {
 
     public static int getExtraPlayerXp(PlayerEntity player) {
 
-        return player.experienceTotal - getLevelPlayerXP(player);
+        return Math.round(player.experience * player.xpBarCap());
     }
 
     public static void setPlayerXP(PlayerEntity player, int exp) {
