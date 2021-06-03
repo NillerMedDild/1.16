@@ -7,6 +7,7 @@ import net.minecraft.enchantment.ThornsEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,16 @@ public class ThornsEnchantmentImp extends EnchantmentOverride {
     public int getMaxEnchantability(int level) {
 
         return super.getMinEnchantability(level) + 50;
+    }
+
+    @Override
+    public boolean canApply(ItemStack stack) {
+
+        Item item = stack.getItem();
+        if (!enable) {
+            return item instanceof ArmorItem || super.canApply(stack);
+        }
+        return item instanceof ArmorItem || item instanceof HorseArmorItem || item.isShield(stack, null);
     }
 
     @Override

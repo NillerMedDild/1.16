@@ -56,6 +56,9 @@ public class ProtectionEnchantmentImp extends EnchantmentOverride {
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
 
         if (!enable) {
+            if (this.protectionType == Type.MAGIC) {
+                return false;
+            }
             return super.canApplyAtEnchantingTable(stack);
         }
         return super.canApplyAtEnchantingTable(stack) || stack.getItem() instanceof HorseArmorItem;
