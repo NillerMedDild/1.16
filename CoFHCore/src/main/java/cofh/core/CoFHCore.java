@@ -101,6 +101,7 @@ public class CoFHCore {
         PACKET_HANDLER.registerPacket(PACKET_STATE, TileStatePacket::new);
 
         PACKET_HANDLER.registerPacket(PACKET_CHAT, IndexedChatPacket::new);
+        PACKET_HANDLER.registerPacket(PACKET_MOTION, PlayerMotionPacket::new);
 
         PACKET_HANDLER.registerPacket(PACKET_GUI_OPEN, FilterGuiOpenPacket::new);
 

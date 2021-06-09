@@ -1,11 +1,14 @@
 package cofh.thermal.core.entity.projectile;
 
+import cofh.core.network.packet.client.PlayerMotionPacket;
 import cofh.lib.entity.AbstractGrenadeEntity;
 import cofh.lib.util.Utils;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleTypes;
@@ -15,7 +18,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -87,7 +92,27 @@ public class SlimeGrenadeEntity extends AbstractGrenadeEntity {
 
         for (LivingEntity mob : mobs) {
             mob.addPotionEffect(new EffectInstance(SLIMED, effectDuration, 0, false, true));
-            double mobDist = Math.sqrt(entity.getDistanceSq(entity));
+
+            double d5 = mob.getPosX() - entity.getPosX();
+            double d7 = mob.getPosY() - entity.getPosY();
+            double d9 = mob.getPosZ() - entity.getPosZ();
+            double d13 = MathHelper.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
+
+            if (d13 != 0.0D) {
+                d5 = d5 / d13;
+                d7 = d7 / d13;
+                d9 = d9 / d13;
+                double d12 = Math.sqrt(entity.getDistanceSq(mob) / 32.0D);
+                double d14 = Explosion.getBlockDensity(entity.getPositionVec(), mob);
+                double d11 = (radius - d12) * d14;
+                d11 *= (1.0D - mob.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                if (mob instanceof ServerPlayerEntity) {
+                    d11 /= 4.0D;
+                    PlayerMotionPacket.sendToClient(d5 * d11, d7 * d11, d9 * d11, (ServerPlayerEntity) mob);
+                } else {
+                    mob.setMotion(mob.getMotion().add(d5 * d11, d7 * d11, d9 * d11));
+                }
+            }
         }
     }
 

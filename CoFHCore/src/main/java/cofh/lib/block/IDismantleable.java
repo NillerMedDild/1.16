@@ -40,7 +40,7 @@ public interface IDismantleable extends IForgeBlock {
         if (tile instanceof ITileCallback) {
             return ((ITileCallback) tile).canPlayerChange(player);
         }
-        return false;
+        return true;
     }
 
 }

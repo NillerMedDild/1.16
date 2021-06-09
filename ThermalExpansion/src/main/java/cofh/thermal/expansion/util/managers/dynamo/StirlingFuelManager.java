@@ -1,6 +1,7 @@
 package cofh.thermal.expansion.util.managers.dynamo;
 
 import cofh.lib.inventory.FalseIInventory;
+import cofh.thermal.core.ThermalCore;
 import cofh.thermal.expansion.init.TExpRecipeTypes;
 import cofh.thermal.expansion.util.recipes.dynamo.StirlingFuel;
 import cofh.thermal.lib.util.managers.SingleItemFuelManager;
@@ -105,8 +106,12 @@ public class StirlingFuelManager extends SingleItemFuelManager {
         ItemStack query;
         for (Item item : ForgeRegistries.ITEMS) {
             query = new ItemStack(item);
-            if (getFuel(query) == null && validFuel(query)) {
-                convertedFuels.add(convert(query, getEnergy(query)));
+            try {
+                if (getFuel(query) == null && validFuel(query)) {
+                    convertedFuels.add(convert(query, getEnergy(query)));
+                }
+            } catch (Exception e) { // pokemon!
+                ThermalCore.LOG.error(query.getItem().getRegistryName() + " threw an exception when querying the fuel value as the mod author is doing non-standard things in their item code (possibly tag related). It may not display in JEI but should function as fuel.");
             }
         }
     }

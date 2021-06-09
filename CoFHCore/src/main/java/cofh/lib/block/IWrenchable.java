@@ -32,7 +32,7 @@ public interface IWrenchable extends IForgeBlock {
         if (tile instanceof ITileCallback) {
             return ((ITileCallback) tile).canPlayerChange(player);
         }
-        return false;
+        return true;
     }
 
 }

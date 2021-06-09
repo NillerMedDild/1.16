@@ -131,7 +131,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
             int caught = 0;
             for (int i = 0; i < baseMod; ++i) {
                 for (ItemStack stack : table.generate(contextBuilder.build(LootParameterSets.EMPTY))) {
-                    if(InventoryHelper.insertStackIntoInventory(internalHandler, stack, false).isEmpty()) {
+                    if (InventoryHelper.insertStackIntoInventory(internalHandler, stack, false).isEmpty()) {
                         ++caught;
                     }
                 }
