@@ -1,9 +1,7 @@
 package cofh.thermal.lib.tileentity;
 
 import cofh.core.tileentity.TileCoFH;
-import cofh.core.util.control.IReconfigurableTile;
-import cofh.core.util.control.ReconfigControlModule;
-import cofh.core.util.control.ReconfigControlModuleLimited;
+import cofh.core.util.control.*;
 import cofh.lib.util.helpers.MathHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -24,10 +22,12 @@ import static cofh.lib.util.constants.Constants.FACING_HORIZONTAL;
 import static cofh.lib.util.constants.NBTTags.*;
 import static cofh.lib.util.helpers.BlockHelper.*;
 
-public abstract class CellTileBase extends ThermalTileBase implements IReconfigurableTile {
+public abstract class CellTileBase extends ThermalTileBase implements IReconfigurableTile, ITransferControllableTile {
 
     protected int compareTracker;
     protected int levelTracker;
+
+    protected int inputTracker;
     protected int outputTracker;
 
     public int amountInput;
@@ -36,6 +36,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
     protected int prevLight;
 
     protected ReconfigControlModule reconfigControl = new ReconfigControlModuleLimited(this);
+    protected TransferControlModule transferControl = new TransferControlModule(this);
 
     public CellTileBase(TileEntityType<?> tileEntityTypeIn) {
 
@@ -156,6 +157,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
         super.getControlPacket(buffer);
 
         reconfigControl.writeToBuffer(buffer);
+        transferControl.writeToBuffer(buffer);
 
         buffer.writeInt(compareTracker);
         buffer.writeInt(levelTracker);
@@ -169,6 +171,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
         super.handleControlPacket(buffer);
 
         reconfigControl.readFromBuffer(buffer);
+        transferControl.readFromBuffer(buffer);
 
         compareTracker = buffer.readInt();
         levelTracker = buffer.readInt();
@@ -234,6 +237,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
 
         reconfigControl.setFacing(Direction.byIndex(nbt.getByte(TAG_FACING)));
         reconfigControl.read(nbt);
+        transferControl.read(nbt);
 
         amountInput = nbt.getInt(TAG_AMOUNT_IN);
         amountOutput = nbt.getInt(TAG_AMOUNT_OUT);
@@ -249,6 +253,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
 
         nbt.putByte(TAG_FACING, (byte) reconfigControl.getFacing().getIndex());
         reconfigControl.write(nbt);
+        transferControl.write(nbt);
 
         nbt.putInt(TAG_AMOUNT_IN, amountInput);
         nbt.putInt(TAG_AMOUNT_OUT, amountOutput);
@@ -274,6 +279,12 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
 
         return reconfigControl;
     }
+
+    @Override
+    public TransferControlModule transferControl() {
+
+        return transferControl;
+    }
     // endregion
 
     // region ITileCallback
@@ -290,6 +301,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
     public void readConveyableData(PlayerEntity player, CompoundNBT tag) {
 
         reconfigControl.readSettings(tag);
+        transferControl.readSettings(tag);
 
         super.readConveyableData(player, tag);
     }
@@ -298,6 +310,7 @@ public abstract class CellTileBase extends ThermalTileBase implements IReconfigu
     public void writeConveyableData(PlayerEntity player, CompoundNBT tag) {
 
         reconfigControl.writeSettings(tag);
+        transferControl.writeSettings(tag);
 
         super.writeConveyableData(player, tag);
     }

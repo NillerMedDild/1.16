@@ -1,7 +1,6 @@
 package cofh.thermal.core.tileentity.storage;
 
 import cofh.core.network.packet.client.TileStatePacket;
-import cofh.lib.energy.EmptyEnergyHandler;
 import cofh.lib.energy.EnergyStorageAdjustable;
 import cofh.lib.util.Utils;
 import cofh.lib.util.helpers.AugmentDataHelper;
@@ -67,7 +66,8 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
     public void tick() {
 
         if (redstoneControl.getState()) {
-            transferRF();
+            transferOut();
+            transferIn();
         }
         if (Utils.timeCheck(world)) {
             updateTrackers(true);
@@ -80,8 +80,33 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
         return Math.min(levelTracker, 8);
     }
 
-    protected void transferRF() {
+    protected void transferIn() {
 
+        if (!transferControl.getTransferIn()) {
+            return;
+        }
+        if (amountInput <= 0 || energyStorage.isFull()) {
+            return;
+        }
+        for (int i = inputTracker; i < 6 && energyStorage.getSpace() > 0; ++i) {
+            if (reconfigControl.getSideConfig(i).isInput()) {
+                attemptExtractRF(Direction.byIndex(i));
+            }
+        }
+        for (int i = 0; i < inputTracker && energyStorage.getSpace() > 0; ++i) {
+            if (reconfigControl.getSideConfig(i).isInput()) {
+                attemptExtractRF(Direction.byIndex(i));
+            }
+        }
+        ++inputTracker;
+        inputTracker %= 6;
+    }
+
+    protected void transferOut() {
+
+        if (!transferControl.getTransferOut()) {
+            return;
+        }
         if (amountOutput <= 0 || energyStorage.isEmpty()) {
             return;
         }
@@ -97,6 +122,17 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
         }
         ++outputTracker;
         outputTracker %= 6;
+    }
+
+    protected void attemptExtractRF(Direction side) {
+
+        TileEntity adjTile = BlockHelper.getAdjacentTileEntity(this, side);
+        if (adjTile != null) {
+            Direction opposite = side.getOpposite();
+            int maxTransfer = Math.min(amountInput, energyStorage.getSpace());
+            adjTile.getCapability(CapabilityEnergy.ENERGY, opposite)
+                    .ifPresent(e -> energyStorage.modify(e.extractEnergy(maxTransfer, false)));
+        }
     }
 
     protected void attemptTransferRF(Direction side) {
@@ -191,11 +227,8 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
     @Override
     protected <T> LazyOptional<T> getEnergyCapability(@Nullable Direction side) {
 
-        if (side == null || reconfigControl.getSideConfig(side.ordinal()).isInput()) {
+        if (side == null || reconfigControl.getSideConfig(side.ordinal()) != SideConfig.SIDE_NONE) {
             return super.getEnergyCapability(side);
-        }
-        if (reconfigControl.getSideConfig(side.ordinal()).isOutput()) {
-            return LazyOptional.of(() -> EmptyEnergyHandler.INSTANCE).cast();
         }
         return LazyOptional.empty();
     }

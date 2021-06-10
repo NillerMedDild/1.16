@@ -22,7 +22,7 @@ public class CellScreenReconfigurable<T extends ContainerCoFH> extends ThermalTi
 
         super.init();
 
-        addPanel(new ConfigPanel(this, tile, () -> tile.getFacing())
+        addPanel(new ConfigPanel(this, tile, tile, () -> tile.getFacing())
                 .allowFacingConfig(true)
                 .addConditionals(ThermalGuiHelper.createDefaultCellConfigs(this, name, tile)));
     }

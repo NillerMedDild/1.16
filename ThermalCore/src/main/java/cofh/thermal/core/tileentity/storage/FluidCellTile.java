@@ -22,15 +22,13 @@ import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.templates.EmptyFluidHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 import static cofh.core.client.renderer.model.ModelUtils.*;
-import static cofh.lib.util.constants.Constants.BUCKET_VOLUME;
-import static cofh.lib.util.constants.Constants.TANK_MEDIUM;
+import static cofh.lib.util.constants.Constants.*;
 import static cofh.thermal.core.init.TCoreReferences.FLUID_CELL_TILE;
 import static cofh.thermal.lib.common.ThermalAugmentRules.FLUID_VALIDATOR;
 import static cofh.thermal.lib.common.ThermalConfig.storageAugments;
@@ -68,7 +66,8 @@ public class FluidCellTile extends CellTileBase implements ITickableTileEntity {
     public void tick() {
 
         if (redstoneControl.getState()) {
-            transferFluid();
+            transferOut();
+            transferIn();
         }
         if (Utils.timeCheck(world) || fluidStorage.getFluidStack().getFluid() != renderFluid.getFluid()) {
             updateTrackers(true);
@@ -81,9 +80,34 @@ public class FluidCellTile extends CellTileBase implements ITickableTileEntity {
         return FluidHelper.luminosity(renderFluid);
     }
 
-    protected void transferFluid() {
+    protected void transferIn() {
 
-        if (amountOutput <= 0 || getTank(0).isEmpty()) {
+        if (!transferControl.getTransferIn()) {
+            return;
+        }
+        if (amountInput <= 0 || fluidStorage.isFull()) {
+            return;
+        }
+        for (int i = inputTracker; i < 6 && fluidStorage.getSpace() > 0; ++i) {
+            if (reconfigControl.getSideConfig(i).isInput()) {
+                FluidHelper.extractFromAdjacent(this, fluidStorage, Math.min(amountInput, fluidStorage.getSpace()), Direction.byIndex(i));
+            }
+        }
+        for (int i = 0; i < inputTracker && fluidStorage.getSpace() > 0; ++i) {
+            if (reconfigControl.getSideConfig(i).isInput()) {
+                FluidHelper.extractFromAdjacent(this, fluidStorage, Math.min(amountInput, fluidStorage.getSpace()), Direction.byIndex(i));
+            }
+        }
+        ++inputTracker;
+        inputTracker %= 6;
+    }
+
+    protected void transferOut() {
+
+        if (!transferControl.getTransferOut()) {
+            return;
+        }
+        if (amountOutput <= 0 || fluidStorage.isEmpty()) {
             return;
         }
         for (int i = outputTracker; i < 6 && fluidStorage.getAmount() > 0; ++i) {
@@ -193,11 +217,8 @@ public class FluidCellTile extends CellTileBase implements ITickableTileEntity {
     @Override
     protected <T> LazyOptional<T> getFluidHandlerCapability(@Nullable Direction side) {
 
-        if (side == null || reconfigControl.getSideConfig(side.ordinal()).isInput()) {
+        if (side == null || reconfigControl.getSideConfig(side.ordinal()) != SideConfig.SIDE_NONE) {
             return super.getFluidHandlerCapability(side);
-        }
-        if (reconfigControl.getSideConfig(side.ordinal()).isOutput()) {
-            return LazyOptional.of(() -> EmptyFluidHandler.INSTANCE).cast();
         }
         return LazyOptional.empty();
     }

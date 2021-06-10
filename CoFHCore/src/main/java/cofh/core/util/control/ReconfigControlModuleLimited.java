@@ -54,6 +54,7 @@ public class ReconfigControlModuleLimited extends ReconfigControlModule {
         }
         int ord = side.ordinal();
         sides[ord] = sides[ord].prev();
+
         if (sides[ord] == SIDE_ACCESSIBLE) {
             sides[ord] = SIDE_BOTH;
         }
@@ -73,24 +74,10 @@ public class ReconfigControlModuleLimited extends ReconfigControlModule {
         }
         int ord = side.ordinal();
         sides[ord] = sides[ord].next();
+
         if (sides[ord] == SIDE_ACCESSIBLE) {
             sides[ord] = SIDE_NONE;
         }
-        if (Utils.isClientWorld(tile.world())) {
-            SideConfigPacket.sendToServer(tile);
-        } else {
-            tile.onControlUpdate();
-        }
-        return true;
-    }
-
-    @Override
-    public boolean setSideConfig(Direction side, SideConfig config) {
-
-        if (!isReconfigurable() || side == null || config == null) {
-            return false;
-        }
-        sides[side.ordinal()] = config;
         if (Utils.isClientWorld(tile.world())) {
             SideConfigPacket.sendToServer(tile);
         } else {
