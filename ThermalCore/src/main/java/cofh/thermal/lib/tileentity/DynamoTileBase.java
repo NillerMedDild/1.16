@@ -54,7 +54,14 @@ public abstract class DynamoTileBase extends ThermalTileBase implements ITickabl
 
         super(tileEntityTypeIn);
         timeTracker = new TimeTracker();
-        energyStorage = new EnergyStorageCoFH(getBaseEnergyStorage(), 0, getBaseEnergyXfer());
+        energyStorage = new EnergyStorageCoFH(getBaseEnergyStorage(), 0, getBaseEnergyXfer()) {
+
+            @Override
+            public boolean canExtract() {
+
+                return false;
+            }
+        };
     }
 
     // region BASE PARAMETERS

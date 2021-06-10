@@ -38,14 +38,7 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
 
         super(ENERGY_CELL_TILE);
 
-        energyStorage = new EnergyStorageAdjustable(BASE_CAPACITY, BASE_RECV, BASE_SEND) {
-
-            @Override
-            public boolean canExtract() {
-
-                return false;
-            }
-        }.setTransferLimits(() -> amountInput, () -> amountOutput);
+        energyStorage = new EnergyStorageAdjustable(BASE_CAPACITY, BASE_RECV, BASE_SEND).setTransferLimits(() -> amountInput, () -> amountOutput);
 
         amountInput = energyStorage.getMaxReceive();
         amountOutput = energyStorage.getMaxExtract();
@@ -90,12 +83,12 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
         }
         for (int i = inputTracker; i < 6 && energyStorage.getSpace() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isInput()) {
-                attemptExtractRF(Direction.byIndex(i));
+                attemptTransferIn(Direction.byIndex(i));
             }
         }
         for (int i = 0; i < inputTracker && energyStorage.getSpace() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isInput()) {
-                attemptExtractRF(Direction.byIndex(i));
+                attemptTransferIn(Direction.byIndex(i));
             }
         }
         ++inputTracker;
@@ -112,30 +105,34 @@ public class EnergyCellTile extends CellTileBase implements ITickableTileEntity 
         }
         for (int i = outputTracker; i < 6 && energyStorage.getEnergyStored() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isOutput()) {
-                attemptTransferRF(Direction.byIndex(i));
+                attemptTransferOut(Direction.byIndex(i));
             }
         }
         for (int i = 0; i < outputTracker && energyStorage.getEnergyStored() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isOutput()) {
-                attemptTransferRF(Direction.byIndex(i));
+                attemptTransferOut(Direction.byIndex(i));
             }
         }
         ++outputTracker;
         outputTracker %= 6;
     }
 
-    protected void attemptExtractRF(Direction side) {
+    protected void attemptTransferIn(Direction side) {
 
         TileEntity adjTile = BlockHelper.getAdjacentTileEntity(this, side);
         if (adjTile != null) {
             Direction opposite = side.getOpposite();
             int maxTransfer = Math.min(amountInput, energyStorage.getSpace());
             adjTile.getCapability(CapabilityEnergy.ENERGY, opposite)
-                    .ifPresent(e -> energyStorage.modify(e.extractEnergy(maxTransfer, false)));
+                    .ifPresent(e -> {
+                        if (e.canExtract()) {
+                            energyStorage.modify(e.extractEnergy(maxTransfer, false));
+                        }
+                    });
         }
     }
 
-    protected void attemptTransferRF(Direction side) {
+    protected void attemptTransferOut(Direction side) {
 
         TileEntity adjTile = BlockHelper.getAdjacentTileEntity(this, side);
         if (adjTile != null) {

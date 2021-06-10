@@ -209,6 +209,13 @@ public class TCoreReferences {
     public static final TileEntityType<FluidCellTile> FLUID_CELL_TILE = null;
     @ObjectHolder(ID_FLUID_CELL)
     public static final ContainerType<FluidCellContainer> FLUID_CELL_CONTAINER = null;
+
+    //    @ObjectHolder(ID_ITEM_CELL)
+    //    public static final Block ITEM_CELL_BLOCK = null;
+    //    @ObjectHolder(ID_ITEM_CELL)
+    //    public static final TileEntityType<ItemCellTile> ITEM_CELL_TILE = null;
+    //    @ObjectHolder(ID_ITEM_CELL)
+    //    public static final ContainerType<ItemCellContainer> ITEM_CELL_CONTAINER = null;
     // endregion
 
     // region WORKBENCHES

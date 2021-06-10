@@ -28,7 +28,8 @@ import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 import static cofh.core.client.renderer.model.ModelUtils.*;
-import static cofh.lib.util.constants.Constants.*;
+import static cofh.lib.util.constants.Constants.BUCKET_VOLUME;
+import static cofh.lib.util.constants.Constants.TANK_MEDIUM;
 import static cofh.thermal.core.init.TCoreReferences.FLUID_CELL_TILE;
 import static cofh.thermal.lib.common.ThermalAugmentRules.FLUID_VALIDATOR;
 import static cofh.thermal.lib.common.ThermalConfig.storageAugments;
@@ -38,7 +39,7 @@ public class FluidCellTile extends CellTileBase implements ITickableTileEntity {
 
     public static final int BASE_CAPACITY = TANK_MEDIUM * 4;
 
-    protected FluidStorageCoFH fluidStorage = new FluidStorageAdjustable(TANK_MEDIUM * 4, fluid -> filter.valid(fluid))
+    protected FluidStorageCoFH fluidStorage = new FluidStorageAdjustable(BASE_CAPACITY, fluid -> filter.valid(fluid))
             .setTransferLimits(() -> amountInput, () -> amountOutput);
 
     public FluidCellTile() {
@@ -90,12 +91,12 @@ public class FluidCellTile extends CellTileBase implements ITickableTileEntity {
         }
         for (int i = inputTracker; i < 6 && fluidStorage.getSpace() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isInput()) {
-                FluidHelper.extractFromAdjacent(this, fluidStorage, Math.min(amountInput, fluidStorage.getSpace()), Direction.byIndex(i));
+                attemptTransferIn(Direction.byIndex(i));
             }
         }
         for (int i = 0; i < inputTracker && fluidStorage.getSpace() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isInput()) {
-                FluidHelper.extractFromAdjacent(this, fluidStorage, Math.min(amountInput, fluidStorage.getSpace()), Direction.byIndex(i));
+                attemptTransferIn(Direction.byIndex(i));
             }
         }
         ++inputTracker;
@@ -112,19 +113,25 @@ public class FluidCellTile extends CellTileBase implements ITickableTileEntity {
         }
         for (int i = outputTracker; i < 6 && fluidStorage.getAmount() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isOutput()) {
-                attemptTransferFluid(Direction.byIndex(i));
+                attemptTransferOut(Direction.byIndex(i));
             }
         }
         for (int i = 0; i < outputTracker && fluidStorage.getAmount() > 0; ++i) {
             if (reconfigControl.getSideConfig(i).isOutput()) {
-                attemptTransferFluid(Direction.byIndex(i));
+                attemptTransferOut(Direction.byIndex(i));
             }
         }
         ++outputTracker;
         outputTracker %= 6;
     }
 
-    protected void attemptTransferFluid(Direction side) {
+    protected void attemptTransferIn(Direction side) {
+
+        FluidHelper.extractFromAdjacent(this, fluidStorage, Math.min(amountInput, fluidStorage.getSpace()), side);
+    }
+
+    // This is used rather than the generic in FluidHelper as it can be optimized somewhat.
+    protected void attemptTransferOut(Direction side) {
 
         TileEntity adjTile = BlockHelper.getAdjacentTileEntity(this, side);
         if (adjTile != null) {
