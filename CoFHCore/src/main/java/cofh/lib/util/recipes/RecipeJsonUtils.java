@@ -274,6 +274,7 @@ public abstract class RecipeJsonUtils {
     public static final String EXPERIENCE = "experience";
     public static final String ENTRY = "entry";
     public static final String FLUID = "fluid";
+    public static final String FLUID_TAG = "fluid";
     public static final String INGREDIENT = "ingredient";
     public static final String INGREDIENTS = "ingredients";
     public static final String INPUT = "input";
