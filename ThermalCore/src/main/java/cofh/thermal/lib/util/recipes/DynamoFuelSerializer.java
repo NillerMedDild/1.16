@@ -15,14 +15,14 @@ import java.util.List;
 
 import static cofh.lib.util.recipes.RecipeJsonUtils.*;
 
-public class ThermalFuelSerializer<T extends ThermalFuel> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+public class DynamoFuelSerializer<T extends ThermalFuel> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
 
     protected final int defaultEnergy;
     protected final int minEnergy;
     protected final int maxEnergy;
     protected final IFactory<T> factory;
 
-    public ThermalFuelSerializer(IFactory<T> factory, int defaultEnergy, int minEnergy, int maxEnergy) {
+    public DynamoFuelSerializer(IFactory<T> factory, int defaultEnergy, int minEnergy, int maxEnergy) {
 
         this.factory = factory;
         this.defaultEnergy = defaultEnergy;

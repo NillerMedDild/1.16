@@ -16,12 +16,12 @@ import java.util.List;
 
 import static cofh.lib.util.recipes.RecipeJsonUtils.*;
 
-public class ThermalRecipeSerializer<T extends ThermalRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+public class MachineRecipeSerializer<T extends ThermalRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
 
     protected final int defaultEnergy;
     protected final IFactory<T> factory;
 
-    public ThermalRecipeSerializer(IFactory<T> factory, int defaultEnergy) {
+    public MachineRecipeSerializer(IFactory<T> factory, int defaultEnergy) {
 
         this.factory = factory;
         this.defaultEnergy = defaultEnergy;

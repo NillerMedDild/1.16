@@ -104,7 +104,7 @@ public class EnderAirBlock extends AirBlock {
         if (entityIn instanceof ItemEntity || entityIn instanceof ExperienceOrbEntity) {
             return;
         }
-        BlockPos randPos = pos.add(-64 + worldIn.rand.nextInt(65) + worldIn.rand.nextInt(65), worldIn.rand.nextInt(8), -64 + worldIn.rand.nextInt(65) + worldIn.rand.nextInt(65));
+        BlockPos randPos = pos.add(-128 + worldIn.rand.nextInt(257), worldIn.rand.nextInt(8), -128 + worldIn.rand.nextInt(257));
 
         if (!worldIn.getBlockState(randPos).getMaterial().isSolid()) {
             if (entityIn instanceof LivingEntity) {

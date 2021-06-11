@@ -11,11 +11,11 @@ import javax.annotation.Nullable;
 
 import static cofh.lib.util.recipes.RecipeJsonUtils.*;
 
-public class ThermalCatalystSerializer<T extends ThermalCatalyst> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+public class MachineCatalystSerializer<T extends ThermalCatalyst> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
 
     protected final IFactory<T> factory;
 
-    public ThermalCatalystSerializer(IFactory<T> factory) {
+    public MachineCatalystSerializer(IFactory<T> factory) {
 
         this.factory = factory;
     }

@@ -60,7 +60,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         super(DEVICE_FISHER_TILE);
 
         inventory.addSlot(inputSlot, INPUT);
-        inventory.addSlots(OUTPUT, 15, item -> filter.valid(item));
+        inventory.addSlots(OUTPUT, 9, item -> filter.valid(item));
 
         xpStorage = new XpStorage(getBaseXpStorage());
 

@@ -168,6 +168,8 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .addIngredient(ItemTagsCoFH.DUSTS_SILVER)
                 .addIngredient(Tags.Items.DUSTS_REDSTONE)
                 .addIngredient(Tags.Items.DUSTS_REDSTONE)
+                .addIngredient(Tags.Items.DUSTS_REDSTONE)
+                .addIngredient(Tags.Items.DUSTS_REDSTONE)
                 .addCriterion("has_redstone_dust", hasItem(Tags.Items.DUSTS_REDSTONE))
                 .build(consumer, ID_THERMAL + ":signalum_dust_4");
 
@@ -539,6 +541,17 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .patternLine(" L ")
                 .patternLine("EXE")
                 .patternLine(" L ")
+                .addCriterion("has_rf_coil", hasItem(rfCoil))
+                .build(withConditions(consumer).flag(FLAG_MACHINE_AUGMENTS), this.modid + ":" + folder + "/" + name(result));
+
+        result = reg.get("machine_efficiency_augment");
+        ShapedRecipeBuilder.shapedRecipe(result)
+                .key('L', ItemTagsCoFH.PLATES_LUMIUM)
+                .key('N', ItemTagsCoFH.GEARS_NICKEL)
+                .key('X', rfCoil)
+                .patternLine(" N ")
+                .patternLine("LXL")
+                .patternLine(" N ")
                 .addCriterion("has_rf_coil", hasItem(rfCoil))
                 .build(withConditions(consumer).flag(FLAG_MACHINE_AUGMENTS), this.modid + ":" + folder + "/" + name(result));
 

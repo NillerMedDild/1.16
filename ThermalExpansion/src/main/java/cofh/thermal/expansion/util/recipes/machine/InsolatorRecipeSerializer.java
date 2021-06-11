@@ -1,7 +1,7 @@
 package cofh.thermal.expansion.util.recipes.machine;
 
 import cofh.thermal.lib.util.recipes.ThermalRecipe;
-import cofh.thermal.lib.util.recipes.ThermalRecipeSerializer;
+import cofh.thermal.lib.util.recipes.MachineRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static cofh.lib.util.recipes.RecipeJsonUtils.*;
 
-public class InsolatorRecipeSerializer<T extends ThermalRecipe> extends ThermalRecipeSerializer<T> {
+public class InsolatorRecipeSerializer<T extends ThermalRecipe> extends MachineRecipeSerializer<T> {
 
     protected final int defaultWater;
 
