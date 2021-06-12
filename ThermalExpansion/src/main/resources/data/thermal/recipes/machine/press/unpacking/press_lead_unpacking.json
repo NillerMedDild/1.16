@@ -1,6 +1,6 @@
 {
   "type": "thermal:press",
-  "input": [
+  "ingredients": [
     {
       "item": "thermal:lead_block",
       "count": 1

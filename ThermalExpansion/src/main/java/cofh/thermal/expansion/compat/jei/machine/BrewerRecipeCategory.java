@@ -1,8 +1,8 @@
 package cofh.thermal.expansion.compat.jei.machine;
 
 import cofh.core.util.helpers.RenderHelper;
+import cofh.thermal.core.util.recipes.machine.BrewerRecipe;
 import cofh.thermal.expansion.client.gui.machine.MachineBrewerScreen;
-import cofh.thermal.expansion.util.recipes.machine.BrewerRecipe;
 import cofh.thermal.lib.compat.jei.Drawables;
 import cofh.thermal.lib.compat.jei.ThermalRecipeCategory;
 import com.mojang.blaze3d.matrix.MatrixStack;

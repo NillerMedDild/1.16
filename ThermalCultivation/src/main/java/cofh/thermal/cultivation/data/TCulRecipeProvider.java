@@ -11,13 +11,13 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
 import static cofh.lib.util.constants.Constants.ID_THERMAL;
 import static cofh.thermal.core.ThermalCore.ITEMS;
-import static cofh.thermal.core.util.RegistrationHelper.block;
-import static cofh.thermal.core.util.RegistrationHelper.seeds;
+import static cofh.thermal.core.util.RegistrationHelper.*;
 import static cofh.thermal.cultivation.init.TCulIDs.*;
 
 public class TCulRecipeProvider extends RecipeProviderCoFH {
@@ -110,6 +110,38 @@ public class TCulRecipeProvider extends RecipeProviderCoFH {
                 .patternLine("AEA")
                 .patternLine(" B ")
                 .addCriterion("has_eggplant", hasItem(reg.get(ID_EGGPLANT)))
+                .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(reg.get(spores(ID_GLOWSTONE_MUSHROOM)))
+                .addIngredient(Items.RED_MUSHROOM)
+                .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
+                .addIngredient(reg.get("phytogro"))
+                .addIngredient(Items.EXPERIENCE_BOTTLE)
+                .addCriterion("has_frost_melon", hasItem(Tags.Items.DUSTS_GLOWSTONE))
+                .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(reg.get(spores(ID_GUNPOWDER_MUSHROOM)))
+                .addIngredient(Items.BROWN_MUSHROOM)
+                .addIngredient(Items.GUNPOWDER)
+                .addIngredient(reg.get("phytogro"))
+                .addIngredient(Items.EXPERIENCE_BOTTLE)
+                .addCriterion("has_frost_melon", hasItem(Items.GUNPOWDER))
+                .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(reg.get(spores(ID_REDSTONE_MUSHROOM)))
+                .addIngredient(Items.RED_MUSHROOM)
+                .addIngredient(Tags.Items.DUSTS_REDSTONE)
+                .addIngredient(reg.get("phytogro"))
+                .addIngredient(Items.EXPERIENCE_BOTTLE)
+                .addCriterion("has_frost_melon", hasItem(Tags.Items.DUSTS_REDSTONE))
+                .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(reg.get(spores(ID_SLIME_MUSHROOM)))
+                .addIngredient(Items.BROWN_MUSHROOM)
+                .addIngredient(Tags.Items.SLIMEBALLS)
+                .addIngredient(reg.get("phytogro"))
+                .addIngredient(Items.EXPERIENCE_BOTTLE)
+                .addCriterion("has_slime_ball", hasItem(Tags.Items.SLIMEBALLS))
                 .build(consumer);
 
         generateStorageRecipes(consumer, reg.get(block(ID_BARLEY)), reg.get(ID_BARLEY), forgeTag("crops/barley"));

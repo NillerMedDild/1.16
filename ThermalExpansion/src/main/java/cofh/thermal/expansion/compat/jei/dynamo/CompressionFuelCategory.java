@@ -1,7 +1,7 @@
 package cofh.thermal.expansion.compat.jei.dynamo;
 
+import cofh.thermal.core.util.recipes.dynamo.CompressionFuel;
 import cofh.thermal.expansion.client.gui.dynamo.DynamoCompressionScreen;
-import cofh.thermal.expansion.util.recipes.dynamo.CompressionFuel;
 import cofh.thermal.lib.compat.jei.Drawables;
 import cofh.thermal.lib.compat.jei.ThermalFuelCategory;
 import com.mojang.blaze3d.matrix.MatrixStack;

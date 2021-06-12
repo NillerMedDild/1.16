@@ -1,6 +1,6 @@
 {
   "type": "thermal:chiller",
-  "input": [
+  "ingredients": [
     {
       "fluid": "thermal:ender",
       "amount": 250

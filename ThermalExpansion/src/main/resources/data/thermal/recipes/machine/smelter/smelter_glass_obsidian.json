@@ -1,6 +1,6 @@
 {
   "type": "thermal:smelter",
-  "input": [
+  "ingredients": [
     {
       "tag": "forge:obsidian",
       "count": 1

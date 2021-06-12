@@ -1,6 +1,6 @@
 {
   "type": "thermal:smelter",
-  "input": [
+  "ingredients": [
     {
       "item": "thermal:obsidian_glass",
       "count": 2

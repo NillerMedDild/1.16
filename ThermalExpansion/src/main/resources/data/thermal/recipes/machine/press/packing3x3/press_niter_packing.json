@@ -1,6 +1,6 @@
 {
   "type": "thermal:press",
-  "input": [
+  "ingredients": [
     {
       "tag": "forge:gems/niter",
       "count": 9

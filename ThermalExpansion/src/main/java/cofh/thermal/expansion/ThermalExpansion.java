@@ -2,7 +2,10 @@ package cofh.thermal.expansion;
 
 import cofh.thermal.expansion.client.gui.dynamo.*;
 import cofh.thermal.expansion.client.gui.machine.*;
-import cofh.thermal.expansion.init.*;
+import cofh.thermal.expansion.init.TExpBlocks;
+import cofh.thermal.expansion.init.TExpContainers;
+import cofh.thermal.expansion.init.TExpItems;
+import cofh.thermal.expansion.init.TExpSounds;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -36,10 +39,6 @@ public class ThermalExpansion {
 
         TExpContainers.register();
         TExpSounds.register();
-
-        TExpRecipeManagers.register();
-        TExpRecipeSerializers.register();
-        TExpRecipeTypes.register();
     }
 
     private void setFeatureFlags() {

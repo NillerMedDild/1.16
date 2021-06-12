@@ -1,6 +1,6 @@
 {
   "type": "thermal:chiller",
-  "input": [
+  "ingredients": [
     {
       "fluid": "minecraft:water",
       "amount": 500

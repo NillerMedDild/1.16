@@ -1,6 +1,6 @@
 {
   "type": "thermal:bottler",
-  "ingredient": [
+  "ingredients": [
     {
       "item": "minecraft:red_concrete_powder"
     },

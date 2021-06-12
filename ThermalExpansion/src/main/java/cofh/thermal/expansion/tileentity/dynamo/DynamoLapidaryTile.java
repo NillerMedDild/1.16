@@ -1,8 +1,8 @@
 package cofh.thermal.expansion.tileentity.dynamo;
 
 import cofh.lib.inventory.ItemStorageCoFH;
+import cofh.thermal.core.util.managers.dynamo.LapidaryFuelManager;
 import cofh.thermal.expansion.inventory.container.dynamo.DynamoLapidaryContainer;
-import cofh.thermal.expansion.util.managers.dynamo.LapidaryFuelManager;
 import cofh.thermal.lib.tileentity.DynamoTileBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

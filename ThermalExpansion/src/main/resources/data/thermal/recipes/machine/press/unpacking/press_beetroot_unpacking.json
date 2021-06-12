@@ -1,6 +1,6 @@
 {
   "type": "thermal:press",
-  "input": [
+  "ingredients": [
     {
       "item": "thermal:beetroot_block",
       "count": 1

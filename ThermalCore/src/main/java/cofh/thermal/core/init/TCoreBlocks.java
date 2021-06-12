@@ -274,10 +274,10 @@ public class TCoreBlocks {
 
     private static void registerMisc() {
 
-        registerBlock(ID_SLIME_TNT, () -> new TNTBlockCoFH(PhytoTNTEntity::new, create(Material.TNT, MaterialColor.GREEN_TERRACOTTA).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
-        registerBlock(ID_REDSTONE_TNT, () -> new TNTBlockCoFH(PhytoTNTEntity::new, create(Material.TNT, MaterialColor.RED).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
-        registerBlock(ID_GLOWSTONE_TNT, () -> new TNTBlockCoFH(PhytoTNTEntity::new, create(Material.TNT, MaterialColor.YELLOW).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
-        registerBlock(ID_ENDER_TNT, () -> new TNTBlockCoFH(PhytoTNTEntity::new, create(Material.TNT, MaterialColor.GREEN).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
+        registerBlock(ID_SLIME_TNT, () -> new TNTBlockCoFH(SlimeTNTEntity::new, create(Material.TNT, MaterialColor.GREEN_TERRACOTTA).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
+        registerBlock(ID_REDSTONE_TNT, () -> new TNTBlockCoFH(RedstoneTNTEntity::new, create(Material.TNT, MaterialColor.RED).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
+        registerBlock(ID_GLOWSTONE_TNT, () -> new TNTBlockCoFH(GlowstoneTNTEntity::new, create(Material.TNT, MaterialColor.YELLOW).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
+        registerBlock(ID_ENDER_TNT, () -> new TNTBlockCoFH(EnderTNTEntity::new, create(Material.TNT, MaterialColor.GREEN).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_BASIC_EXPLOSIVES));
 
         registerBlock(ID_PHYTO_TNT, () -> new TNTBlockCoFH(PhytoTNTEntity::new, create(Material.TNT, MaterialColor.GREEN).hardnessAndResistance(0.0F).sound(SoundType.PLANT)), getFlag(FLAG_PHYTOGRO_EXPLOSIVES));
 
@@ -295,8 +295,9 @@ public class TCoreBlocks {
 
         registerAugBlock(ID_DEVICE_HIVE_EXTRACTOR, () -> new TileBlockActive4Way(create(Material.WOOD).sound(SoundType.SCAFFOLDING).hardnessAndResistance(2.5F).harvestTool(ToolType.AXE), DeviceHiveExtractorTile::new), deviceAugs, DeviceHiveExtractorTile.AUG_VALIDATOR, getFlag(ID_DEVICE_HIVE_EXTRACTOR));
         registerAugBlock(ID_DEVICE_TREE_EXTRACTOR, () -> new TileBlockActive4Way(create(Material.WOOD).sound(SoundType.SCAFFOLDING).hardnessAndResistance(2.5F).harvestTool(ToolType.AXE), DeviceTreeExtractorTile::new), deviceAugs, DeviceTreeExtractorTile.AUG_VALIDATOR, getFlag(ID_DEVICE_TREE_EXTRACTOR));
-        registerAugBlock(ID_DEVICE_FISHER, () -> new TileBlockActive4Way(create(Material.WOOD).sound(SoundType.SCAFFOLDING).hardnessAndResistance(2.0F).harvestTool(ToolType.AXE), DeviceFisherTile::new), deviceAugs, DeviceFisherTile.AUG_VALIDATOR, getFlag(ID_DEVICE_FISHER));
+        registerAugBlock(ID_DEVICE_FISHER, () -> new TileBlockActive4Way(create(Material.WOOD).sound(SoundType.SCAFFOLDING).hardnessAndResistance(2.5F).harvestTool(ToolType.AXE), DeviceFisherTile::new), deviceAugs, DeviceFisherTile.AUG_VALIDATOR, getFlag(ID_DEVICE_FISHER));
         registerAugBlock(ID_DEVICE_SOIL_INFUSER, () -> new TileBlockActive4Way(create(Material.WOOD).sound(SoundType.SCAFFOLDING).hardnessAndResistance(2.5F).harvestTool(ToolType.AXE).setLightLevel(lightValue(ACTIVE, 10)), DeviceSoilInfuserTile::new), deviceAugs, DeviceSoilInfuserTile.AUG_VALIDATOR, getFlag(ID_DEVICE_SOIL_INFUSER));
+
         registerAugBlock(ID_DEVICE_WATER_GEN, () -> new TileBlockActive4Way(create(Material.IRON).sound(SoundType.LANTERN).hardnessAndResistance(2.0F).harvestTool(ToolType.PICKAXE), DeviceWaterGenTile::new), deviceAugs, DeviceWaterGenTile.AUG_VALIDATOR, getFlag(ID_DEVICE_WATER_GEN));
         registerAugBlock(ID_DEVICE_ROCK_GEN, () -> new TileBlockActive4Way(create(Material.IRON).sound(SoundType.LANTERN).hardnessAndResistance(2.0F).harvestTool(ToolType.PICKAXE).setLightLevel(lightValue(ACTIVE, 14)), DeviceRockGenTile::new), deviceAugs, DeviceRockGenTile.AUG_VALIDATOR, getFlag(ID_DEVICE_ROCK_GEN));
         registerAugBlock(ID_DEVICE_COLLECTOR, () -> new TileBlockActive4Way(create(Material.IRON).sound(SoundType.LANTERN).hardnessAndResistance(2.0F).harvestTool(ToolType.PICKAXE), DeviceCollectorTile::new), deviceAugs, DeviceCollectorTile.AUG_VALIDATOR, getFlag(ID_DEVICE_COLLECTOR));

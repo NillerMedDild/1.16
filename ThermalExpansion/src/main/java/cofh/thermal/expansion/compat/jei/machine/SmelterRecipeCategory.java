@@ -1,8 +1,8 @@
 package cofh.thermal.expansion.compat.jei.machine;
 
+import cofh.thermal.core.util.managers.machine.SmelterRecipeManager;
+import cofh.thermal.core.util.recipes.machine.SmelterRecipe;
 import cofh.thermal.expansion.client.gui.machine.MachineSmelterScreen;
-import cofh.thermal.expansion.util.managers.machine.SmelterRecipeManager;
-import cofh.thermal.expansion.util.recipes.machine.SmelterRecipe;
 import cofh.thermal.lib.compat.jei.Drawables;
 import cofh.thermal.lib.compat.jei.ThermalRecipeCategory;
 import com.mojang.blaze3d.matrix.MatrixStack;

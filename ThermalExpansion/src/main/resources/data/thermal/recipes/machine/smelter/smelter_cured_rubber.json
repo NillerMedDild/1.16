@@ -1,6 +1,6 @@
 {
   "type": "thermal:smelter",
-  "input": [
+  "ingredients": [
     {
       "item": "thermal:rubber",
       "count": 2

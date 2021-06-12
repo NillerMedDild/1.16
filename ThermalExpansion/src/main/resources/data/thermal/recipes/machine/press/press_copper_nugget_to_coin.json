@@ -1,6 +1,6 @@
 {
   "type": "thermal:press",
-  "input": [
+  "ingredients": [
     {
       "tag": "forge:nuggets/copper",
       "count": 3

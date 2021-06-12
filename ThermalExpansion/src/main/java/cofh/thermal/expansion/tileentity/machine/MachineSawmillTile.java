@@ -2,8 +2,8 @@ package cofh.thermal.expansion.tileentity.machine;
 
 import cofh.lib.client.audio.ConditionalSound;
 import cofh.lib.inventory.ItemStorageCoFH;
+import cofh.thermal.core.util.managers.machine.SawmillRecipeManager;
 import cofh.thermal.expansion.inventory.container.machine.MachineSawmillContainer;
-import cofh.thermal.expansion.util.managers.machine.SawmillRecipeManager;
 import cofh.thermal.lib.tileentity.MachineTileProcess;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

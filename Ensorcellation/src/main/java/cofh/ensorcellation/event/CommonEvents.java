@@ -72,15 +72,13 @@ public class CommonEvents {
         if (event.isCanceled()) {
             return;
         }
-        LivingEntity entity = event.getEntityLiving();
         DamageSource source = event.getSource();
         Entity attacker = source.getTrueSource();
         // MAGIC EDGE
         if (attacker instanceof LivingEntity) {
             int encMagicEdge = getHeldEnchantmentLevel((LivingEntity) attacker, MAGIC_EDGE);
-            if (encMagicEdge > 0 && !source.isMagicDamage() && source.damageType.equals(DAMAGE_PLAYER)) {
-                event.setCanceled(true);
-                entity.attackEntityFrom(event.getSource().setDamageBypassesArmor().setMagicDamage(), event.getAmount() + MagicEdgeEnchantment.getExtraDamage(encMagicEdge));
+            if (encMagicEdge > 0 && !source.isMagicDamage()) {
+                source.setDamageBypassesArmor().setMagicDamage();
             }
         }
     }
@@ -314,6 +312,7 @@ public class CommonEvents {
         // MAGIC EDGE
         int encMagicEdge = getHeldEnchantmentLevel(living, MAGIC_EDGE);
         if (encMagicEdge > 0 && source.isMagicDamage()) {
+            event.setAmount(event.getAmount() + MagicEdgeEnchantment.getExtraDamage(encMagicEdge));
             MagicEdgeEnchantment.onHit(entity, encMagicEdge);
         }
         // VORPAL

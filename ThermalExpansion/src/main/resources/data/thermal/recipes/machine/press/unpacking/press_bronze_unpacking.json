@@ -1,6 +1,6 @@
 {
   "type": "thermal:press",
-  "input": [
+  "ingredients": [
     {
       "item": "thermal:bronze_block",
       "count": 1

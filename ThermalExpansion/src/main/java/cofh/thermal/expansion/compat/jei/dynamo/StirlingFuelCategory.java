@@ -1,7 +1,7 @@
 package cofh.thermal.expansion.compat.jei.dynamo;
 
+import cofh.thermal.core.util.recipes.dynamo.StirlingFuel;
 import cofh.thermal.expansion.client.gui.dynamo.DynamoStirlingScreen;
-import cofh.thermal.expansion.util.recipes.dynamo.StirlingFuel;
 import cofh.thermal.lib.compat.jei.Drawables;
 import cofh.thermal.lib.compat.jei.ThermalFuelCategory;
 import mezz.jei.api.constants.VanillaTypes;

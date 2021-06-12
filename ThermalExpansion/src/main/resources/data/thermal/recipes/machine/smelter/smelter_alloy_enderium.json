@@ -1,6 +1,6 @@
 {
   "type": "thermal:smelter",
-  "input": [
+  "ingredients": [
     {
       "value": [
         {

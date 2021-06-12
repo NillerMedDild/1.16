@@ -1,6 +1,6 @@
 {
   "type": "thermal:bottler",
-  "ingredient": [
+  "ingredients": [
     {
       "tag": "forge:cobblestone"
     },
@@ -12,7 +12,6 @@
   "result": [
     {
       "item": "minecraft:mossy_cobblestone"
-
     }
   ],
   "energy": 2000

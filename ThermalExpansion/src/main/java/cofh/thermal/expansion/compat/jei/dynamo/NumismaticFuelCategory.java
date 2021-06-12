@@ -1,7 +1,7 @@
 package cofh.thermal.expansion.compat.jei.dynamo;
 
+import cofh.thermal.core.util.recipes.dynamo.NumismaticFuel;
 import cofh.thermal.expansion.client.gui.dynamo.DynamoNumismaticScreen;
-import cofh.thermal.expansion.util.recipes.dynamo.NumismaticFuel;
 import cofh.thermal.lib.compat.jei.Drawables;
 import cofh.thermal.lib.compat.jei.ThermalFuelCategory;
 import mezz.jei.api.constants.VanillaTypes;

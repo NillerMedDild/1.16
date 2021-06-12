@@ -1,13 +1,13 @@
 package cofh.thermal.expansion.compat.jei;
 
+import cofh.thermal.core.util.managers.dynamo.StirlingFuelManager;
+import cofh.thermal.core.util.managers.machine.BottlerRecipeManager;
+import cofh.thermal.core.util.managers.machine.BrewerRecipeManager;
+import cofh.thermal.core.util.managers.machine.FurnaceRecipeManager;
 import cofh.thermal.expansion.client.gui.dynamo.*;
 import cofh.thermal.expansion.client.gui.machine.*;
 import cofh.thermal.expansion.compat.jei.dynamo.*;
 import cofh.thermal.expansion.compat.jei.machine.*;
-import cofh.thermal.expansion.util.managers.dynamo.StirlingFuelManager;
-import cofh.thermal.expansion.util.managers.machine.BottlerRecipeManager;
-import cofh.thermal.expansion.util.managers.machine.BrewerRecipeManager;
-import cofh.thermal.expansion.util.managers.machine.FurnaceRecipeManager;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static cofh.lib.util.constants.Constants.ID_THERMAL;
 import static cofh.thermal.core.ThermalCore.ITEMS;
-import static cofh.thermal.expansion.init.TExpRecipeTypes.*;
+import static cofh.thermal.core.init.TCoreRecipeTypes.*;
 import static cofh.thermal.expansion.init.TExpReferences.*;
 
 @JeiPlugin

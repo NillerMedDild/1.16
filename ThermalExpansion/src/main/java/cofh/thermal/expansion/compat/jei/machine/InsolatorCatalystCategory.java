@@ -1,6 +1,6 @@
 package cofh.thermal.expansion.compat.jei.machine;
 
-import cofh.thermal.expansion.util.recipes.machine.InsolatorCatalyst;
+import cofh.thermal.core.util.recipes.machine.InsolatorCatalyst;
 import cofh.thermal.lib.compat.jei.ThermalCatalystCategory;
 import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;

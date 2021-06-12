@@ -1,7 +1,7 @@
 package cofh.thermal.expansion.compat.jei.machine;
 
+import cofh.thermal.core.util.recipes.machine.FurnaceRecipe;
 import cofh.thermal.expansion.client.gui.machine.MachineFurnaceScreen;
-import cofh.thermal.expansion.util.recipes.machine.FurnaceRecipe;
 import cofh.thermal.lib.compat.jei.Drawables;
 import cofh.thermal.lib.compat.jei.ThermalRecipeCategory;
 import com.mojang.blaze3d.matrix.MatrixStack;
