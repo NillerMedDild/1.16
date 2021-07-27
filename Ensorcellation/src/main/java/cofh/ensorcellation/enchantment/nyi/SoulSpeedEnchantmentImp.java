@@ -10,7 +10,7 @@ public class SoulSpeedEnchantmentImp extends EnchantmentOverride {
 
     public SoulSpeedEnchantmentImp() {
 
-        super(Rarity.RARE, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
+        super(Rarity.VERY_RARE, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
         maxLevel = 3;
         treasureEnchantment = true;
 
