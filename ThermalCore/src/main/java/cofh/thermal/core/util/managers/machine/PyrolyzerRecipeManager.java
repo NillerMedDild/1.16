@@ -27,11 +27,6 @@ public class PyrolyzerRecipeManager extends SingleItemRecipeManager {
 
     // region IManager
     @Override
-    public void config() {
-
-    }
-
-    @Override
     public void refresh(RecipeManager recipeManager) {
 
         clear();

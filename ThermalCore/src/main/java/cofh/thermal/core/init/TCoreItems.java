@@ -21,7 +21,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 import static cofh.lib.util.constants.Constants.FALSE;
-import static cofh.lib.util.constants.Constants.TRUE;
 import static cofh.lib.util.constants.NBTTags.*;
 import static cofh.thermal.core.ThermalCore.BLOCKS;
 import static cofh.thermal.core.ThermalCore.ITEMS;
@@ -151,15 +150,13 @@ public class TCoreItems {
 
         registerItem("ender_pearl_dust", group);
 
-        registerMetalSet("iron", group, Rarity.COMMON, TRUE, true);
-        registerMetalSet("gold", group, Rarity.COMMON, TRUE, true);
+        registerVanillaMetalSet("iron", group);
+        registerVanillaMetalSet("gold", group);
 
-        registerGemSet("lapis", group, Rarity.COMMON, TRUE, true);
-        registerGemSet("diamond", group, Rarity.COMMON, TRUE, true);
-        registerGemSet("emerald", group, Rarity.COMMON, TRUE, true);
-        registerGemSet("quartz", group, Rarity.COMMON, TRUE, true);
-
-        Rarity rarity = Rarity.UNCOMMON;
+        registerVanillaGemSet("lapis", group);
+        registerVanillaGemSet("diamond", group);
+        registerVanillaGemSet("emerald", group);
+        registerVanillaGemSet("quartz", group);
 
         registerMetalSet("copper", group, getFlag(FLAG_RESOURCE_COPPER));
         registerMetalSet("tin", group, getFlag(FLAG_RESOURCE_TIN));
@@ -167,14 +164,16 @@ public class TCoreItems {
         registerMetalSet("silver", group, getFlag(FLAG_RESOURCE_SILVER));
         registerMetalSet("nickel", group, getFlag(FLAG_RESOURCE_NICKEL));
 
-        registerMetalSet("bronze", group, getFlag(FLAG_RESOURCE_BRONZE));
-        registerMetalSet("electrum", group, getFlag(FLAG_RESOURCE_ELECTRUM));
-        registerMetalSet("invar", group, getFlag(FLAG_RESOURCE_INVAR));
-        registerMetalSet("constantan", group, getFlag(FLAG_RESOURCE_CONSTANTAN));
+        registerAlloySet("bronze", group, getFlag(FLAG_RESOURCE_BRONZE));
+        registerAlloySet("electrum", group, getFlag(FLAG_RESOURCE_ELECTRUM));
+        registerAlloySet("invar", group, getFlag(FLAG_RESOURCE_INVAR));
+        registerAlloySet("constantan", group, getFlag(FLAG_RESOURCE_CONSTANTAN));
 
-        registerMetalSet("signalum", group, rarity);
-        registerMetalSet("lumium", group, rarity);
-        registerMetalSet("enderium", group, rarity);
+        Rarity rarity = Rarity.UNCOMMON;
+
+        registerAlloySet("signalum", group, rarity);
+        registerAlloySet("lumium", group, rarity);
+        registerAlloySet("enderium", group, rarity);
 
         registerGemSet("ruby", group, getFlag(FLAG_RESOURCE_RUBY));
         registerGemSet("sapphire", group, getFlag(FLAG_RESOURCE_SAPPHIRE));

@@ -116,11 +116,6 @@ public class TreeExtractorManager extends AbstractManager {
 
     // region IManager
     @Override
-    public void config() {
-
-    }
-
-    @Override
     public void refresh(RecipeManager recipeManager) {
 
         clear();

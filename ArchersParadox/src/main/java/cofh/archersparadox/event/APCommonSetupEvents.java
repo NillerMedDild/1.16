@@ -1,5 +1,6 @@
 package cofh.archersparadox.event;
 
+import cofh.archersparadox.init.APConfig;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
@@ -26,7 +27,7 @@ public class APCommonSetupEvents {
     @SubscribeEvent
     public static void setupVillagerTrades(final VillagerTradesEvent event) {
 
-        if (event.getType() == VillagerProfession.FLETCHER) {
+        if (event.getType() == VillagerProfession.FLETCHER && APConfig.enableFletcherTrades.get()) {
             Int2ObjectMap<List<VillagerTrades.ITrade>> trades = event.getTrades();
 
             List<VillagerTrades.ITrade> noviceTrades = trades.get(1);

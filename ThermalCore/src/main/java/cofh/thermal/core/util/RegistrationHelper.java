@@ -111,22 +111,45 @@ public class RegistrationHelper {
     // region METAL SETS
     public static void registerMetalSet(String prefix, ItemGroup group, Rarity rarity) {
 
-        registerMetalSet(prefix, group, rarity, TRUE, false);
+        registerMetalSet(prefix, group, rarity, TRUE, false, false);
     }
 
     public static void registerMetalSet(String prefix, ItemGroup group, Rarity rarity, BooleanSupplier showInGroups) {
 
-        registerMetalSet(prefix, group, rarity, showInGroups, false);
+        registerMetalSet(prefix, group, rarity, showInGroups, false, false);
     }
 
     public static void registerMetalSet(String prefix, ItemGroup group, BooleanSupplier showInGroups) {
 
-        registerMetalSet(prefix, group, Rarity.COMMON, showInGroups, false);
+        registerMetalSet(prefix, group, Rarity.COMMON, showInGroups, false, false);
     }
 
-    public static void registerMetalSet(String prefix, ItemGroup group, Rarity rarity, BooleanSupplier showInGroups, boolean vanilla) {
+    public static void registerAlloySet(String prefix, ItemGroup group, Rarity rarity) {
+
+        registerMetalSet(prefix, group, rarity, TRUE, false, true);
+    }
+
+    public static void registerAlloySet(String prefix, ItemGroup group, Rarity rarity, BooleanSupplier showInGroups) {
+
+        registerMetalSet(prefix, group, rarity, showInGroups, false, true);
+    }
+
+    public static void registerAlloySet(String prefix, ItemGroup group, BooleanSupplier showInGroups) {
+
+        registerMetalSet(prefix, group, Rarity.COMMON, showInGroups, false, true);
+    }
+
+    public static void registerVanillaMetalSet(String prefix, ItemGroup group) {
+
+        registerMetalSet(prefix, group, Rarity.COMMON, TRUE, true, false);
+    }
+
+    public static void registerMetalSet(String prefix, ItemGroup group, Rarity rarity, BooleanSupplier showInGroups, boolean vanilla, boolean alloy) {
 
         if (!vanilla) {
+            if (false) {    // TODO: 1.17 - if NOT alloy
+                ITEMS.register("raw_" + prefix, () -> new ItemCoFH(new Item.Properties().group(group).rarity(rarity)).setShowInGroups(showInGroups));
+            }
             ITEMS.register(prefix + "_ingot", () -> new ItemCoFH(new Item.Properties().group(group).rarity(rarity)).setShowInGroups(showInGroups));
             ITEMS.register(prefix + "_nugget", () -> new ItemCoFH(new Item.Properties().group(group).rarity(rarity)).setShowInGroups(showInGroups));
         }
@@ -146,6 +169,11 @@ public class RegistrationHelper {
     public static void registerGemSet(String prefix, ItemGroup group, BooleanSupplier showInGroups) {
 
         registerGemSet(prefix, group, Rarity.COMMON, showInGroups, false);
+    }
+
+    public static void registerVanillaGemSet(String prefix, ItemGroup group) {
+
+        registerGemSet(prefix, group, Rarity.COMMON, TRUE, true);
     }
 
     public static void registerGemSet(String prefix, ItemGroup group, Rarity rarity, BooleanSupplier showInGroups, boolean vanilla) {
@@ -241,6 +269,11 @@ public class RegistrationHelper {
     public static void registerSpores(String id, ItemGroup group) {
 
         ITEMS.register(spores(id), () -> new BlockNamedItemCoFH(BLOCKS.get(id), new Item.Properties().group(group)));
+    }
+
+    public static String deepslate(String id) {
+
+        return "deepslate_" + id;
     }
 
     public static String block(String id) {

@@ -43,6 +43,10 @@ public class APConfig {
 
     private static void genServerConfig() {
 
+        enableFletcherTrades = SERVER_CONFIG
+                .comment("If TRUE, trades will be added to Fletcher Villagers.")
+                .define("Enable Fletcher Trades", true);
+
         genArrowConfig();
 
         serverSpec = SERVER_CONFIG.build();
@@ -240,6 +244,8 @@ public class APConfig {
     // endregion
 
     // region VARIABLES
+    public static BooleanValue enableFletcherTrades;
+
     public static BooleanValue enableCreativeTab;
 
     private static IntValue blazeArrowDuration;

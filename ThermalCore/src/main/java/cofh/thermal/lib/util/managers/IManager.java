@@ -4,7 +4,9 @@ import net.minecraft.item.crafting.RecipeManager;
 
 public interface IManager {
 
-    void config();
+    default void config() {
+
+    }
 
     void refresh(RecipeManager recipeManager);
 

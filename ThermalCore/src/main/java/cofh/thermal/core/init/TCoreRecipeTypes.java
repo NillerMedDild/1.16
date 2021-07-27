@@ -20,6 +20,7 @@ public class TCoreRecipeTypes {
         // Recipes are self-registered as they do not currently have a proper Forge Registry.
         MAPPING_TREE_EXTRACTOR.register();
         BOOST_TREE_EXTRACTOR.register();
+        BOOST_FISHER.register();
         MAPPING_ROCK_GEN.register();
         BOOST_POTION_DIFFUSER.register();
 

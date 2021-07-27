@@ -9,6 +9,10 @@ public abstract class AbstractManager implements IManager {
     protected int defaultEnergy;
     protected float defaultScale = 1.0F;
 
+    protected AbstractManager() {
+
+    }
+
     protected AbstractManager(int defaultEnergy) {
 
         this.defaultEnergy = defaultEnergy;

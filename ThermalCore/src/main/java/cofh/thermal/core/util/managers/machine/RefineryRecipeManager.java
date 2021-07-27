@@ -117,11 +117,6 @@ public class RefineryRecipeManager extends AbstractManager implements IRecipeMan
 
     // region IManager
     @Override
-    public void config() {
-
-    }
-
-    @Override
     public void refresh(RecipeManager recipeManager) {
 
         clear();

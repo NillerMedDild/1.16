@@ -9,8 +9,9 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.loot.LootTables;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Map;
 
@@ -18,12 +19,7 @@ public class FisherManager extends AbstractManager {
 
     private static final FisherManager INSTANCE = new FisherManager();
 
-    protected Map<ComparableItemStack, Pair<Integer, Float>> boostMap = new Object2ObjectOpenHashMap<>();
-
-    protected FisherManager() {
-
-        super(4);
-    }
+    protected Map<ComparableItemStack, Triple<ResourceLocation, Float, Float>> boostMap = new Object2ObjectOpenHashMap<>();
 
     public static FisherManager instance() {
 
@@ -44,27 +40,27 @@ public class FisherManager extends AbstractManager {
     public void addBoost(FisherBoost boost) {
 
         for (ItemStack ingredient : boost.getIngredient().getMatchingStacks()) {
-            boostMap.put(convert(ingredient), Pair.of(boost.getCycles(), boost.getOutputMod()));
+            boostMap.put(convert(ingredient), Triple.of(boost.getLootTable(), boost.getOutputMod(), boost.getUseChance()));
         }
     }
 
-    public int getBoostCycles(ItemStack item) {
+    public ResourceLocation getBoostLootTable(ItemStack item) {
 
-        return validBoost(item) ? boostMap.get(convert(item)).getLeft() : 0;
+        return validBoost(item) ? boostMap.get(convert(item)).getLeft() : LootTables.GAMEPLAY_FISHING_FISH;
     }
 
     public float getBoostOutputMod(ItemStack item) {
+
+        return validBoost(item) ? boostMap.get(convert(item)).getMiddle() : 1.0F;
+    }
+
+    public float getBoostUseChance(ItemStack item) {
 
         return validBoost(item) ? boostMap.get(convert(item)).getRight() : 1.0F;
     }
     // endregion
 
     // region IManager
-    @Override
-    public void config() {
-
-    }
-
     @Override
     public void refresh(RecipeManager recipeManager) {
 

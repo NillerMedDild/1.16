@@ -14,17 +14,19 @@ public class FisherBoost extends SerializableRecipe {
 
     protected final Ingredient ingredient;
 
+    protected ResourceLocation lootTable;
     protected float outputMod;
-    protected int cycles;
+    protected float useChance;
 
-    protected FisherBoost(ResourceLocation recipeId, Ingredient inputItem, float outputMod, int cycles) {
+    protected FisherBoost(ResourceLocation recipeId, Ingredient inputItem, ResourceLocation lootTable, float outputMod, float useChance) {
 
         super(recipeId);
 
         this.ingredient = inputItem;
 
+        this.lootTable = lootTable;
         this.outputMod = outputMod;
-        this.cycles = cycles;
+        this.useChance = useChance;
     }
 
     @Override
@@ -45,14 +47,19 @@ public class FisherBoost extends SerializableRecipe {
         return ingredient;
     }
 
+    public ResourceLocation getLootTable() {
+
+        return lootTable;
+    }
+
     public float getOutputMod() {
 
         return outputMod;
     }
 
-    public int getCycles() {
+    public float getUseChance() {
 
-        return cycles;
+        return useChance;
     }
     // endregion
 }

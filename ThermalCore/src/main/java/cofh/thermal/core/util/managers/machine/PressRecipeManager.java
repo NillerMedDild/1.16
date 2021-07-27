@@ -156,11 +156,6 @@ public class PressRecipeManager extends AbstractManager implements IRecipeManage
 
     // region IManager
     @Override
-    public void config() {
-
-    }
-
-    @Override
     public void refresh(RecipeManager recipeManager) {
 
         clear();

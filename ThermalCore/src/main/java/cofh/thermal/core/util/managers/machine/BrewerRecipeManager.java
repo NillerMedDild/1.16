@@ -142,11 +142,6 @@ public class BrewerRecipeManager extends AbstractManager implements IRecipeManag
 
     // region IManager
     @Override
-    public void config() {
-
-    }
-
-    @Override
     public void refresh(RecipeManager recipeManager) {
 
         clear();

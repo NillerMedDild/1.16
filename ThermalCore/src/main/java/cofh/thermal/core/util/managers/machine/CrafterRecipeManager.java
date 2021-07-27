@@ -45,11 +45,6 @@ public class CrafterRecipeManager implements IManager {
 
     // region IManager
     @Override
-    public void config() {
-
-    }
-
-    @Override
     public void refresh(RecipeManager recipeManager) {
 
         recipeMap.clear();

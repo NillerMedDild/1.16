@@ -106,6 +106,14 @@ public class ThermalConfig {
 
         SERVER_CONFIG.pop();
 
+        SERVER_CONFIG.push("Villagers");
+
+        enableVillagerTrades = SERVER_CONFIG
+                .comment("If TRUE, trades will be added to various Villagers.")
+                .define("Enable Villager Trades", true);
+
+        SERVER_CONFIG.pop();
+
         genWorldConfig();
 
         serverSpec = SERVER_CONFIG.build();
@@ -229,6 +237,8 @@ public class ThermalConfig {
 
     public static boolean permanentLava = true;
     public static boolean permanentWater = true;
+
+    public static BooleanValue enableVillagerTrades;
 
     public static BooleanValue keepEnergy;
     public static BooleanValue keepItems;

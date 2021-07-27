@@ -8,6 +8,7 @@ import cofh.lib.util.helpers.InventoryHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.xp.XpStorage;
 import cofh.thermal.core.inventory.container.device.DeviceFisherContainer;
+import cofh.thermal.core.util.managers.device.FisherManager;
 import cofh.thermal.lib.tileentity.DeviceTileBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +23,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.BiomeDictionary;
@@ -46,7 +48,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
 
     protected static final int TIME_CONSTANT = 7200;
 
-    protected ItemStorageCoFH inputSlot = new ItemStorageCoFH(item -> filter.valid(item));
+    protected ItemStorageCoFH inputSlot = new ItemStorageCoFH(item -> FisherManager.instance().validBoost(item));
     protected SimpleItemHandler internalHandler;
 
     protected boolean cached;
@@ -56,6 +58,8 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
     public int radius = RADIUS;
 
     protected int process = TIME_CONSTANT / 2;
+
+    protected ResourceLocation lootTable = LootTables.GAMEPLAY_FISHING_FISH;
 
     public DeviceFisherTile() {
 
@@ -72,9 +76,14 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
     }
 
     @Override
-    protected void updateValidity() {
+    public void updateContainingBlockInfo() {
 
-        // TODO: Check on rotation; adjust formula.
+        super.updateContainingBlockInfo();
+        updateValidity();
+    }
+
+    @Override
+    protected void updateValidity() {
 
         if (world == null || !world.isAreaLoaded(pos, 1 + radius) || Utils.isClientWorld(world)) {
             return;
@@ -88,14 +97,16 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
 
         if (state.getFluid().equals(Fluids.WATER)) {
             BlockPos areaPos = pos.offset(myState.get(FACING_HORIZONTAL), 2);
-            Iterable<BlockPos> area = BlockPos.getAllInBoxMutable(areaPos.add(-1, 0, -1), areaPos.add(1, 0, 1));
-            for (BlockPos scan : area) {
-                state = world.getFluidState(scan);
-                if (state.getFluid().equals(Fluids.WATER)) {
-                    ++facingWater;
+            if (world.getFluidState(areaPos).getFluid().equals(Fluids.WATER)) {
+                Iterable<BlockPos> area = BlockPos.getAllInBoxMutable(areaPos.add(-1, 0, -1), areaPos.add(1, 0, 1));
+                for (BlockPos scan : area) {
+                    state = world.getFluidState(scan);
+                    if (state.getFluid().equals(Fluids.WATER)) {
+                        ++facingWater;
+                    }
                 }
+                valid = facingWater >= 6;
             }
-            valid = facingWater >= 6;
         }
         cached = true;
     }
@@ -105,6 +116,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
 
         if (!cached) {
             updateValidity();
+            process = getTimeConstant();
         }
         super.updateActiveState();
     }
@@ -123,6 +135,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         if (!isActive) {
             return;
         }
+        process -= 100;
         --process;
         if (process > 0) {
             return;
@@ -130,20 +143,33 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         process = getTimeConstant();
 
         if (valid) {
-            LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING_FISH);
+            LootTable table = world.getServer().getLootTableManager().getLootTableFromLocation(FisherManager.instance().getBoostLootTable(inputSlot.getItemStack()));
             LootContext.Builder contextBuilder = new LootContext.Builder((ServerWorld) world).withRandom(world.rand);
 
+            float lootBase = baseMod * FisherManager.instance().getBoostOutputMod(inputSlot.getItemStack());
+            float lootExtra = lootBase - (int) lootBase;
+            int lootCount = (int) lootBase + (MathHelper.RANDOM.nextFloat() < lootExtra ? 1 : 0);
+
             int caught = 0;
-            for (int i = 0; i < baseMod; ++i) {
-                for (ItemStack stack : table.generate(contextBuilder.build(LootParameterSets.EMPTY))) {
+
+            List<ItemStack> tablefinal = table.generate(contextBuilder.build(LootParameterSets.EMPTY));
+
+            for (int i = 0; i < lootCount; ++i) {
+                for (ItemStack stack : tablefinal) {
                     if (InventoryHelper.insertStackIntoInventory(internalHandler, stack, false).isEmpty()) {
                         ++caught;
                     }
                 }
             }
-            if (xpStorageFeature && caught > 0) {
-                xpStorage.receiveXp(caught + world.rand.nextInt(3 * caught), false);
+            if (caught > 0) {
+                if (MathHelper.RANDOM.nextFloat() < FisherManager.instance().getBoostUseChance(inputSlot.getItemStack())) {
+                    inputSlot.consume(1);
+                }
+                if (xpStorageFeature) {
+                    xpStorage.receiveXp(caught + world.rand.nextInt(3 * caught), false);
+                }
             }
+            updateValidity();
         }
     }
 
@@ -154,11 +180,31 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         return new DeviceFisherContainer(i, world, pos, inventory, player);
     }
 
+    // region NBT
+    @Override
+    public void read(BlockState state, CompoundNBT nbt) {
+
+        super.read(state, nbt);
+
+        process = nbt.getInt(TAG_PROCESS);
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT nbt) {
+
+        super.write(nbt);
+
+        nbt.putInt(TAG_PROCESS, process);
+
+        return nbt;
+    }
+    // endregion
+
     // region HELPERS
     protected int getTimeConstant() {
 
         if (world == null) {
-            return TIME_CONSTANT;
+            return TIME_CONSTANT / 2;
         }
         int constant = TIME_CONSTANT;
 
@@ -166,15 +212,6 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         boolean isRiver = Utils.hasBiomeType(world, pos, BiomeDictionary.Type.RIVER);
         boolean isRaining = world.isRainingAt(pos);
 
-        if (isOcean) {
-            constant /= 3;
-        }
-        if (isRiver) {
-            constant /= 2;
-        }
-        if (isRaining) {
-            constant /= 2;
-        }
         BlockState myState = getBlockState();
         BlockPos areaPos = pos.offset(myState.get(FACING_HORIZONTAL), radius);
         Iterable<BlockPos> area = BlockPos.getAllInBoxMutable(areaPos.add(-radius, 1 - radius, -radius), areaPos.add(radius, 0, radius));
@@ -185,7 +222,16 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
                 constant -= 40;
             }
         }
-        return MathHelper.clamp(constant, TIME_CONSTANT / 20, TIME_CONSTANT);
+        if (isOcean) {
+            constant /= 3;
+        }
+        if (isRiver) {
+            constant /= 2;
+        }
+        if (isRaining) {
+            constant /= 2;
+        }
+        return MathHelper.clamp(constant, TIME_CONSTANT / 40, TIME_CONSTANT);
     }
     // endregion
 
