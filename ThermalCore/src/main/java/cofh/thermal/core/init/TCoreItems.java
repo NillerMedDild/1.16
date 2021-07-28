@@ -193,8 +193,8 @@ public class TCoreItems {
 
         registerItem("junk_net", () -> new ItemCoFH(new Item.Properties().group(group)).setShowInGroups(getFlag(ID_DEVICE_FISHER)));
         registerItem("aquachow", () -> new ItemCoFH(new Item.Properties().group(group)).setShowInGroups(getFlag(ID_DEVICE_FISHER)));
+        registerItem("deep_aquachow", () -> new ItemCoFH(new Item.Properties().group(group)).setShowInGroups(getFlag(ID_DEVICE_FISHER)));
         //        registerItem("rich_aquachow", group);
-        //        registerItem("deep_aquachow", group);
         //        registerItem("fluxed_aquachow", group);
 
         registerItem("earth_charge", () -> new EarthChargeItem(new Item.Properties().group(group)));

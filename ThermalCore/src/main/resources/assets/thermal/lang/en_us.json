@@ -207,6 +207,8 @@
   "item.thermal.junk_net.desc": "Use in the §e§oAquatic Entangler§r§6 to catch junk. Not consumable.",
   "item.thermal.aquachow": "Aqua-Chow",
   "item.thermal.aquachow.desc": "Use in the §e§oAquatic Entangler§r§6 to catch more fish.",
+  "item.thermal.deep_aquachow": "Benthic Aqua-Chow",
+  "item.thermal.deep_aquachow.desc": "Use in the §e§oAquatic Entangler§r§6 to catch things from the deep. Best used in Ocean biomes.",
 
   "item.thermal.copper_coin": "Copper Coin",
   "item.thermal.copper_dust": "Copper Dust",

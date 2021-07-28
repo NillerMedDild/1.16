@@ -6,6 +6,7 @@ import cofh.lib.inventory.IItemStackAccess;
 import cofh.lib.util.ComparableItemStack;
 import cofh.thermal.core.init.TCoreRecipeTypes;
 import cofh.thermal.lib.util.managers.AbstractManager;
+import cofh.thermal.lib.util.managers.CatalyzedRecipeManager;
 import cofh.thermal.lib.util.managers.IRecipeManager;
 import cofh.thermal.lib.util.recipes.IThermalInventory;
 import cofh.thermal.lib.util.recipes.ThermalCatalyst;
@@ -24,7 +25,7 @@ import java.util.*;
 
 import static java.util.Arrays.asList;
 
-public class SmelterRecipeManager extends AbstractManager implements IRecipeManager {
+public class SmelterRecipeManager extends AbstractManager implements IRecipeManager, CatalyzedRecipeManager {
 
     private static final SmelterRecipeManager INSTANCE = new SmelterRecipeManager();
     protected static final int DEFAULT_ENERGY = 3200;
@@ -150,6 +151,7 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
     }
     // endregion
 
+    @Override
     public List<ItemStack> getCatalysts() {
 
         List<ItemStack> ret = new ArrayList<>(catalystMap.size());
@@ -158,11 +160,13 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
     }
 
     // region CATALYSTS
+    @Override
     public IRecipeCatalyst getCatalyst(IItemStackAccess input) {
 
         return catalystMap.get(convert(input.getItemStack()));
     }
 
+    @Override
     public IRecipeCatalyst getCatalyst(ItemStack input) {
 
         return catalystMap.get(convert(input));

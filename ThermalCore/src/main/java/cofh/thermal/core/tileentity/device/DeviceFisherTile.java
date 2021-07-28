@@ -162,10 +162,8 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
 
             int caught = 0;
 
-            List<ItemStack> tablefinal = table.generate(contextBuilder.build(LootParameterSets.EMPTY));
-
             for (int i = 0; i < lootCount; ++i) {
-                for (ItemStack stack : tablefinal) {
+                for (ItemStack stack : table.generate(contextBuilder.build(LootParameterSets.EMPTY))) {
                     if (InventoryHelper.insertStackIntoInventory(internalHandler, stack, false).isEmpty()) {
                         ++caught;
                     }
@@ -176,7 +174,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
                     inputSlot.consume(1);
                 }
                 if (xpStorageFeature) {
-                    xpStorage.receiveXp(caught + world.rand.nextInt(3 * caught), false);
+                    xpStorage.receiveXp(caught + world.rand.nextInt(2 * caught), false);
                 }
                 Vector3d splashVec = Vector3d.copyCenteredWithVerticalOffset(pos.offset(getBlockState().get(FACING_HORIZONTAL)), 1.0);
                 ((ServerWorld) world).spawnParticle(ParticleTypes.FISHING, splashVec.x, splashVec.y, splashVec.z, 10, 0.1D, 0.0D, 0.1D, 0.02D);

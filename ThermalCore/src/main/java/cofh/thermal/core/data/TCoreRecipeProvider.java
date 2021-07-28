@@ -839,6 +839,14 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .addCriterion("has_wheat", hasItem(Tags.Items.CROPS_WHEAT))
                 .build(withConditions(consumer).flag(ID_DEVICE_FISHER), ID_THERMAL + ":aquachow_4");
 
+        ShapelessRecipeBuilder.shapelessRecipe(reg.get("deep_aquachow"), 4)
+                .addIngredient(Items.WHEAT)
+                .addIngredient(Items.BEETROOT)
+                .addIngredient(Items.SLIME_BALL)
+                .addIngredient(ItemTagsCoFH.NUGGETS_LEAD)
+                .addCriterion("has_beetroot", hasItem(Tags.Items.CROPS_BEETROOT))
+                .build(withConditions(consumer).flag(ID_DEVICE_FISHER), ID_THERMAL + ":deep_aquachow_4");
+
         ShapelessRecipeBuilder.shapelessRecipe(reg.get("basalz_powder"), 2)
                 .addIngredient(reg.get("basalz_rod"))
                 .addCriterion("has_basalz_rod", hasItem(reg.get("basalz_rod")))
