@@ -66,6 +66,12 @@ public class TCoreItemModelProvider extends ItemModelProviderCoFH {
         generated(reg.getSup("slag"), RESOURCES);
         generated(reg.getSup("rich_slag"), RESOURCES);
 
+        generated(reg.getSup("junk_net"), TOOLS);
+        generated(reg.getSup("aquachow"), TOOLS);
+        //        generated(reg.getSup("rich_aquachow"), TOOLS);
+        //        generated(reg.getSup("deep_aquachow"), TOOLS);
+        //        generated(reg.getSup("fluxed_aquachow"), TOOLS);
+
         generated(reg.getSup("beekeeper_fabric"), CRAFTING);
         generated(reg.getSup("diving_fabric"), CRAFTING);
         generated(reg.getSup("hazmat_fabric"), CRAFTING);
@@ -140,6 +146,7 @@ public class TCoreItemModelProvider extends ItemModelProviderCoFH {
         generated(reg.getSup("rf_potato"), TOOLS);
         generated(reg.getSup("lock"), TOOLS);
         generated(reg.getSup("phytogro"), TOOLS);
+        // generated(reg.getSup("fluxed_phytogro"), TOOLS);
 
         generated(reg.getSup("earth_charge"), TOOLS);
         generated(reg.getSup("ice_charge"), TOOLS);

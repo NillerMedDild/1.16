@@ -130,7 +130,7 @@ public abstract class SingleItemRecipeManager extends AbstractManager implements
     // endregion
 
     // region CATALYZED CLASS
-    public static abstract class Catalyzed extends SingleItemRecipeManager {
+    public static abstract class Catalyzed extends SingleItemRecipeManager implements CatalyzedRecipeManager {
 
         protected Map<ComparableItemStack, IRecipeCatalyst> catalystMap = new Object2ObjectOpenHashMap<>();
 
@@ -145,6 +145,7 @@ public abstract class SingleItemRecipeManager extends AbstractManager implements
             catalystMap.clear();
         }
 
+        @Override
         public List<ItemStack> getCatalysts() {
 
             List<ItemStack> ret = new ArrayList<>(catalystMap.size());
@@ -153,11 +154,13 @@ public abstract class SingleItemRecipeManager extends AbstractManager implements
         }
 
         // region CATALYSTS
+        @Override
         public IRecipeCatalyst getCatalyst(IItemStackAccess input) {
 
             return catalystMap.get(convert(input.getItemStack()));
         }
 
+        @Override
         public IRecipeCatalyst getCatalyst(ItemStack input) {
 
             return catalystMap.get(convert(input));

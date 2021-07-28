@@ -41,8 +41,6 @@ public class RedstoneArsenal {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
 
-        RSAConfig.register();
-
         RSABlocks.register();
         RSAItems.register();
     }
@@ -50,6 +48,7 @@ public class RedstoneArsenal {
     // region INITIALIZATION
     private void commonSetup(final FMLCommonSetupEvent event) {
 
+        RSAConfig.register();
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

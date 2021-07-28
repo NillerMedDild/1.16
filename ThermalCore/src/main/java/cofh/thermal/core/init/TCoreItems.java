@@ -189,6 +189,13 @@ public class TCoreItems {
         registerItem("xp_crystal", () -> new XpCrystalItem(new Item.Properties().maxStackSize(1).group(group), 10000));
         registerItem("lock", () -> new LockItem(new Item.Properties().group(group)));
         registerItem("phytogro", () -> new PhytoGroItem(new Item.Properties().group(group)));
+        // registerItem("fluxed_phytogro", () -> new PhytoGroItem(new Item.Properties().group(group), 5));
+
+        registerItem("junk_net", () -> new ItemCoFH(new Item.Properties().group(group)).setShowInGroups(getFlag(ID_DEVICE_FISHER)));
+        registerItem("aquachow", () -> new ItemCoFH(new Item.Properties().group(group)).setShowInGroups(getFlag(ID_DEVICE_FISHER)));
+        //        registerItem("rich_aquachow", group);
+        //        registerItem("deep_aquachow", group);
+        //        registerItem("fluxed_aquachow", group);
 
         registerItem("earth_charge", () -> new EarthChargeItem(new Item.Properties().group(group)));
         registerItem("ice_charge", () -> new IceChargeItem(new Item.Properties().group(group)));
@@ -610,8 +617,8 @@ public class TCoreItems {
         ItemGroup group = THERMAL_ITEMS;
 
         registerItem("basalz_spawn_egg", () -> new SpawnEggItemCoFH(() -> BASALZ_ENTITY, 0x363840, 0x080407, new Item.Properties().group(group)).setShowInGroups(getFlag(FLAG_MOB_BASALZ)));
-        registerItem("blizz_spawn_egg", () -> new SpawnEggItemCoFH(() -> BLIZZ_ENTITY, 0xD8DBE5, 0x5BB6E5, new Item.Properties().group(group)).setShowInGroups(getFlag(FLAG_MOB_BLIZZ)));
-        registerItem("blitz_spawn_egg", () -> new SpawnEggItemCoFH(() -> BLITZ_ENTITY, 0xECFEFC, 0xFFD46D, new Item.Properties().group(group)).setShowInGroups(getFlag(FLAG_MOB_BLITZ)));
+        registerItem("blizz_spawn_egg", () -> new SpawnEggItemCoFH(() -> BLIZZ_ENTITY, 0xD8DBE5, 0x91D9FC, new Item.Properties().group(group)).setShowInGroups(getFlag(FLAG_MOB_BLIZZ)));
+        registerItem("blitz_spawn_egg", () -> new SpawnEggItemCoFH(() -> BLITZ_ENTITY, 0xC9EEFF, 0xFFD97E, new Item.Properties().group(group)).setShowInGroups(getFlag(FLAG_MOB_BLITZ)));
     }
     // endregion
 

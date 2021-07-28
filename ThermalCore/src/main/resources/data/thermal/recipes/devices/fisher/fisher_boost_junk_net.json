@@ -1,9 +1,8 @@
 {
   "type": "thermal:fisher_boost",
   "ingredient": {
-    "tag": "forge:dusts/glowstone"
+    "item": "thermal:junk_net"
   },
   "loot_table": "gameplay/fishing/junk",
-  "output_mod": 1.25,
-  "use_chance": 0.50
+  "use_chance": 0.0
 }

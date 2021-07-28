@@ -22,14 +22,14 @@ public class DeviceFisherContainer extends TileContainer {
         this.tile = (ThermalTileBase) world.getTileEntity(pos);
         InvWrapperCoFH tileInv = new InvWrapperCoFH(this.tile.getItemInv());
 
-        addSlot(new SlotCoFH(tileInv, 0, 35, 35));
+        addSlot(new SlotCoFH(tileInv, 0, 26, 35));
 
         for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                addSlot(new SlotRemoveOnly(tileInv, 1 + j + i * 3, 89 + j * 18, 17 + i * 18));
+            for (int j = 0; j < 5; ++j) {
+                addSlot(new SlotRemoveOnly(tileInv, 1 + j + i * 5, 62 + j * 18, 17 + i * 18));
             }
         }
-        bindAugmentSlots(tileInv, 10, this.tile.augSize());
+        bindAugmentSlots(tileInv, 16, this.tile.augSize());
         bindPlayerInventory(inventory);
     }
 

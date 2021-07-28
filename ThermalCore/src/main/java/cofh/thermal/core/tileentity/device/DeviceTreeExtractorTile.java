@@ -51,7 +51,7 @@ public class DeviceTreeExtractorTile extends DeviceTileBase implements ITickable
     public static final BiPredicate<ItemStack, List<ItemStack>> AUG_VALIDATOR = createAllowValidator(TAG_AUGMENT_TYPE_UPGRADE, TAG_AUGMENT_TYPE_FLUID, TAG_AUGMENT_TYPE_FILTER);
 
     protected static final int NUM_LEAVES = 3;
-    protected static final int TIME_CONSTANT = 500;
+    protected static int timeConstant = 500;
 
     protected ItemStorageCoFH inputSlot = new ItemStorageCoFH(item -> filter.valid(item) && TreeExtractorManager.instance().validBoost(item));
     protected FluidStorageCoFH outputTank = new FluidStorageCoFH(TANK_MEDIUM);
@@ -62,11 +62,16 @@ public class DeviceTreeExtractorTile extends DeviceTileBase implements ITickable
     protected BlockPos trunkPos;
     protected final BlockPos[] leafPos = new BlockPos[NUM_LEAVES];
 
-    protected int process = TIME_CONSTANT / 2;
+    protected int process = timeConstant / 2;
 
     protected int boostCycles;
     protected int boostMax = TreeExtractorManager.instance().getDefaultEnergy();
     protected float boostMult;
+
+    public static void setTimeConstant(int configConstant) {
+
+        timeConstant = configConstant;
+    }
 
     public DeviceTreeExtractorTile() {
 
@@ -195,14 +200,16 @@ public class DeviceTreeExtractorTile extends DeviceTileBase implements ITickable
 
         updateActiveState();
 
-        if (!isActive) {
-            return;
-        }
         --process;
         if (process > 0) {
             return;
         }
+        updateValidity();
         process = getTimeConstant();
+
+        if (!isActive) {
+            return;
+        }
         Fluid curFluid = renderFluid.getFluid();
 
         if (valid) {
@@ -218,7 +225,6 @@ public class DeviceTreeExtractorTile extends DeviceTileBase implements ITickable
                 boostMult = 1.0F;
             }
             outputTank.fill(new FluidStack(renderFluid, (int) (renderFluid.getAmount() * baseMod * boostMult)), EXECUTE);
-            updateValidity();
         }
         if (curFluid != renderFluid.getFluid()) {
             TileStatePacket.sendToClient(this);
@@ -351,16 +357,16 @@ public class DeviceTreeExtractorTile extends DeviceTileBase implements ITickable
     protected int getTimeConstant() {
 
         if (world == null) {
-            return TIME_CONSTANT;
+            return timeConstant;
         }
-        int constant = TIME_CONSTANT / 2;
+        int constant = timeConstant / 2;
         Iterable<BlockPos> area = BlockPos.getAllInBoxMutable(trunkPos.add(-1, 0, -1), trunkPos.add(1, 0, 1));
         for (BlockPos scan : area) {
             if (isTreeExtractor(world.getBlockState(scan))) {
-                constant += TIME_CONSTANT / 2;
+                constant += timeConstant / 2;
             }
         }
-        return MathHelper.clamp(constant, TIME_CONSTANT, TIME_CONSTANT * 2);
+        return MathHelper.clamp(constant, timeConstant, timeConstant * 2);
     }
 
     protected boolean isTrunkBase(BlockPos checkPos) {

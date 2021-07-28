@@ -35,6 +35,12 @@ public class PhytoGroItem extends ItemCoFH {
         super(builder);
     }
 
+    public PhytoGroItem(Properties builder, int strength) {
+
+        super(builder);
+        this.strength = strength;
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
 

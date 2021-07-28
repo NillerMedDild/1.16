@@ -7,6 +7,7 @@ import cofh.lib.util.DeferredRegisterCoFH;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -25,14 +26,19 @@ public class Ensorcellation {
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ENCHANTMENTS.register(modEventBus);
+        modEventBus.addListener(this::commonSetup);
 
-        EnsorcConfig.register();
+        ENCHANTMENTS.register(modEventBus);
 
         EnsorcEnchantments.register();
 
         CoreItems.registerHorseArmorOverrides();
         CoreItems.registerShieldOverride();
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+
+        EnsorcConfig.register();
     }
 
 }

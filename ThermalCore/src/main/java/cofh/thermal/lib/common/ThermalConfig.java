@@ -1,12 +1,17 @@
 package cofh.thermal.lib.common;
 
+import cofh.thermal.core.tileentity.device.DeviceFisherTile;
+import cofh.thermal.core.tileentity.device.DeviceTreeExtractorTile;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import static cofh.thermal.core.init.TCoreIDs.ID_DEVICE_FISHER;
+import static cofh.thermal.core.init.TCoreIDs.ID_DEVICE_TREE_EXTRACTOR;
 import static cofh.thermal.lib.common.ThermalFlags.*;
 
 public class ThermalConfig {
@@ -40,10 +45,6 @@ public class ThermalConfig {
     private static ForgeConfigSpec clientSpec;
 
     private static void genServerConfig() {
-
-        //        SERVER_CONFIG.push("Machines");
-        //
-        //        SERVER_CONFIG.pop();
 
         SERVER_CONFIG.push("Global Options");
 
@@ -114,6 +115,7 @@ public class ThermalConfig {
 
         SERVER_CONFIG.pop();
 
+        genDeviceConfig();
         genWorldConfig();
 
         serverSpec = SERVER_CONFIG.build();
@@ -144,38 +146,59 @@ public class ThermalConfig {
 
         SERVER_CONFIG.push("World Generation");
 
-        flagGenApatite = SERVER_CONFIG
+        worldGenApatite = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Apatite from generating.")
                 .define("Apatite", true);
-        flagGenCinnabar = SERVER_CONFIG
+        worldGenCinnabar = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Cinnabar from generating.")
                 .define("Cinnabar", true);
-        flagGenNiter = SERVER_CONFIG
+        worldGenNiter = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Niter from generating.")
                 .define("Niter", true);
-        flagGenSulfur = SERVER_CONFIG
+        worldGenSulfur = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Sulfur from generating.")
                 .define("Sulfur", true);
 
-        flagGenCopper = SERVER_CONFIG
+        worldGenCopper = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Copper from generating.")
                 .define("Copper", true);
-        flagGenTin = SERVER_CONFIG
+        worldGenTin = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Tin from generating.")
                 .define("Tin", true);
-        flagGenLead = SERVER_CONFIG
+        worldGenLead = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Lead from generating.")
                 .define("Lead", true);
-        flagGenSilver = SERVER_CONFIG
+        worldGenSilver = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Silver from generating.")
                 .define("Silver", true);
-        flagGenNickel = SERVER_CONFIG
+        worldGenNickel = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Nickel from generating.")
                 .define("Nickel", true);
 
-        flagGenOil = SERVER_CONFIG
+        worldGenOil = SERVER_CONFIG
                 .comment("Set to FALSE to prevent 'Thermal Series' Oil Sands from generating.")
                 .define("Oil", true);
+
+        SERVER_CONFIG.pop();
+    }
+
+    private static void genDeviceConfig() {
+
+        SERVER_CONFIG.push("Devices");
+
+        if (getFlag(ID_DEVICE_TREE_EXTRACTOR).getAsBoolean()) {
+            deviceTreeExtractorTimeConstant = SERVER_CONFIG
+                    .comment("This sets the base time constant (in ticks) for the Arboreal Extractor.")
+                    .defineInRange("Time Constant", 500, 20, 36000);
+        }
+        if (getFlag(ID_DEVICE_FISHER).getAsBoolean()) {
+            deviceFisherTimeConstant = SERVER_CONFIG
+                    .comment("This sets the base time constant (in ticks) for the Aquatic Entangler.")
+                    .defineInRange("Time Constant", 3600, 400, 36000);
+            deviceFisherTimeReductionWater = SERVER_CONFIG
+                    .comment("This sets the time constant reduction (in ticks) per nearby Water source block for the Aquatic Entangler.")
+                    .defineInRange("Water Source Time Constant Reduction", 20, 1, 100);
+        }
 
         SERVER_CONFIG.pop();
     }
@@ -197,23 +220,35 @@ public class ThermalConfig {
         setFlag(FLAG_RS_CONTROL_AUGMENT, !flagRSControl.get());
         setFlag(FLAG_XP_STORAGE_AUGMENT, !flagXPStorage.get());
 
+        refreshDeviceConfig();
         refreshWorldConfig();
+    }
+
+    private static void refreshDeviceConfig() {
+
+        if (deviceTreeExtractorTimeConstant != null) {
+            DeviceTreeExtractorTile.setTimeConstant(deviceTreeExtractorTimeConstant.get());
+        }
+        if (deviceFisherTimeConstant != null) {
+            DeviceFisherTile.setTimeConstant(deviceFisherTimeConstant.get());
+            DeviceFisherTile.setTimeReductionWater(deviceFisherTimeReductionWater.get());
+        }
     }
 
     private static void refreshWorldConfig() {
 
-        setFlag(FLAG_GEN_APATITE, () -> getFlag(FLAG_RESOURCE_APATITE).getAsBoolean() && flagGenApatite.get());
-        setFlag(FLAG_GEN_CINNABAR, () -> getFlag(FLAG_RESOURCE_CINNABAR).getAsBoolean() && flagGenCinnabar.get());
-        setFlag(FLAG_GEN_NITER, () -> getFlag(FLAG_RESOURCE_NITER).getAsBoolean() && flagGenNiter.get());
-        setFlag(FLAG_GEN_SULFUR, () -> getFlag(FLAG_RESOURCE_SULFUR).getAsBoolean() && flagGenSulfur.get());
+        setFlag(FLAG_GEN_APATITE, () -> getFlag(FLAG_RESOURCE_APATITE).getAsBoolean() && worldGenApatite.get());
+        setFlag(FLAG_GEN_CINNABAR, () -> getFlag(FLAG_RESOURCE_CINNABAR).getAsBoolean() && worldGenCinnabar.get());
+        setFlag(FLAG_GEN_NITER, () -> getFlag(FLAG_RESOURCE_NITER).getAsBoolean() && worldGenNiter.get());
+        setFlag(FLAG_GEN_SULFUR, () -> getFlag(FLAG_RESOURCE_SULFUR).getAsBoolean() && worldGenSulfur.get());
 
-        setFlag(FLAG_GEN_COPPER, () -> getFlag(FLAG_RESOURCE_COPPER).getAsBoolean() && flagGenCopper.get());
-        setFlag(FLAG_GEN_TIN, () -> getFlag(FLAG_RESOURCE_TIN).getAsBoolean() && flagGenTin.get());
-        setFlag(FLAG_GEN_LEAD, () -> getFlag(FLAG_RESOURCE_LEAD).getAsBoolean() && flagGenLead.get());
-        setFlag(FLAG_GEN_SILVER, () -> getFlag(FLAG_RESOURCE_SILVER).getAsBoolean() && flagGenSilver.get());
-        setFlag(FLAG_GEN_NICKEL, () -> getFlag(FLAG_RESOURCE_NICKEL).getAsBoolean() && flagGenNickel.get());
+        setFlag(FLAG_GEN_COPPER, () -> getFlag(FLAG_RESOURCE_COPPER).getAsBoolean() && worldGenCopper.get());
+        setFlag(FLAG_GEN_TIN, () -> getFlag(FLAG_RESOURCE_TIN).getAsBoolean() && worldGenTin.get());
+        setFlag(FLAG_GEN_LEAD, () -> getFlag(FLAG_RESOURCE_LEAD).getAsBoolean() && worldGenLead.get());
+        setFlag(FLAG_GEN_SILVER, () -> getFlag(FLAG_RESOURCE_SILVER).getAsBoolean() && worldGenSilver.get());
+        setFlag(FLAG_GEN_NICKEL, () -> getFlag(FLAG_RESOURCE_NICKEL).getAsBoolean() && worldGenNickel.get());
 
-        setFlag(FLAG_GEN_OIL, () -> getFlag(FLAG_RESOURCE_OIL).getAsBoolean() && flagGenOil.get());
+        setFlag(FLAG_GEN_OIL, () -> getFlag(FLAG_RESOURCE_OIL).getAsBoolean() && worldGenOil.get());
     }
 
     private static void refreshClientConfig() {
@@ -260,21 +295,25 @@ public class ThermalConfig {
     private static BooleanValue flagMobBlitz;
     private static BooleanValue flagMobBlizz;
 
-    private static BooleanValue flagGenApatite;
-    private static BooleanValue flagGenCinnabar;
-    private static BooleanValue flagGenNiter;
-    private static BooleanValue flagGenSulfur;
+    private static BooleanValue worldGenApatite;
+    private static BooleanValue worldGenCinnabar;
+    private static BooleanValue worldGenNiter;
+    private static BooleanValue worldGenSulfur;
 
-    private static BooleanValue flagGenCopper;
-    private static BooleanValue flagGenTin;
-    private static BooleanValue flagGenLead;
-    private static BooleanValue flagGenSilver;
-    private static BooleanValue flagGenNickel;
+    private static BooleanValue worldGenCopper;
+    private static BooleanValue worldGenTin;
+    private static BooleanValue worldGenLead;
+    private static BooleanValue worldGenSilver;
+    private static BooleanValue worldGenNickel;
 
-    private static BooleanValue flagGenOil;
+    private static BooleanValue worldGenOil;
 
     private static BooleanValue freezePermanentLava;
     private static BooleanValue freezePermanentWater;
+
+    private static IntValue deviceTreeExtractorTimeConstant;
+    private static IntValue deviceFisherTimeConstant;
+    private static IntValue deviceFisherTimeReductionWater;
     // endregion
 
     // region CLIENT VARIABLES

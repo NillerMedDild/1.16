@@ -822,6 +822,23 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .addCriterion("rich_slag", hasItem(reg.get("rich_slag")))
                 .build(consumer, ID_THERMAL + ":phytogro_2");
 
+        ShapedRecipeBuilder.shapedRecipe(reg.get("junk_net"), 1)
+                .key('#', Tags.Items.STRING)
+                .key('n', Tags.Items.NUGGETS_IRON)
+                .key('S', Items.STICK)
+                .patternLine("n#n")
+                .patternLine("#S#")
+                .patternLine("n#n")
+                .addCriterion("has_string", hasItem(Tags.Items.STRING))
+                .build(withConditions(consumer).flag(ID_DEVICE_FISHER));
+
+        ShapelessRecipeBuilder.shapelessRecipe(reg.get("aquachow"), 4)
+                .addIngredient(Items.WHEAT)
+                .addIngredient(Items.WHEAT)
+                .addIngredient(Items.SLIME_BALL)
+                .addCriterion("has_wheat", hasItem(Tags.Items.CROPS_WHEAT))
+                .build(withConditions(consumer).flag(ID_DEVICE_FISHER), ID_THERMAL + ":aquachow_4");
+
         ShapelessRecipeBuilder.shapelessRecipe(reg.get("basalz_powder"), 2)
                 .addIngredient(reg.get("basalz_rod"))
                 .addCriterion("has_basalz_rod", hasItem(reg.get("basalz_rod")))

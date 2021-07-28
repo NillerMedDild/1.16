@@ -10,6 +10,7 @@ import cofh.thermal.core.client.gui.storage.FluidCellScreen;
 import cofh.thermal.core.client.gui.workbench.ChargeBenchScreen;
 import cofh.thermal.core.client.gui.workbench.TinkerBenchScreen;
 import cofh.thermal.core.client.renderer.entity.*;
+import cofh.thermal.core.entity.monster.BasalzEntity;
 import cofh.thermal.core.init.*;
 import cofh.thermal.core.world.gen.feature.ThermalFeatures;
 import cofh.thermal.lib.common.ThermalConfig;
@@ -27,6 +28,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -80,6 +82,7 @@ public class ThermalCore {
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        modEventBus.addListener(this::entitySetup);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
 
@@ -93,8 +96,6 @@ public class ThermalCore {
         RECIPE_SERIALIZERS.register(modEventBus);
         SOUND_EVENTS.register(modEventBus);
         TILE_ENTITIES.register(modEventBus);
-
-        ThermalConfig.register();
 
         CoreEnchantments.registerHoldingEnchantment();
     }
@@ -112,7 +113,16 @@ public class ThermalCore {
     }
 
     // region INITIALIZATION
+    private void entitySetup(final EntityAttributeCreationEvent event) {
+
+        event.put(BASALZ_ENTITY, BasalzEntity.registerAttributes().create());
+        event.put(BLITZ_ENTITY, BasalzEntity.registerAttributes().create());
+        event.put(BLIZZ_ENTITY, BasalzEntity.registerAttributes().create());
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event) {
+
+        ThermalConfig.register();
 
         event.enqueueWork(TCoreBlocks::setup);
         event.enqueueWork(TCoreItems::setup);

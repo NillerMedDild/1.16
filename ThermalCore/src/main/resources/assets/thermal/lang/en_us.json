@@ -203,6 +203,11 @@
   "item.thermal.xp_crystal": "Insightful Crystal",
   "item.thermal.xp_crystal.desc": "Stores experience.",
 
+  "item.thermal.junk_net": "Junk Net",
+  "item.thermal.junk_net.desc": "Use in the §e§oAquatic Entangler§r§6 to catch junk. Not consumable.",
+  "item.thermal.aquachow": "Aqua-Chow",
+  "item.thermal.aquachow.desc": "Use in the §e§oAquatic Entangler§r§6 to catch more fish.",
+
   "item.thermal.copper_coin": "Copper Coin",
   "item.thermal.copper_dust": "Copper Dust",
   "item.thermal.copper_gear": "Copper Gear",
@@ -460,7 +465,7 @@
   "info.thermal.device_collector.1": "Filter configuration will apply to this behavior.",
   "info.thermal.device_collector.2": "Keep those floors clean!",
 
-  "info.thermal.device_fisher.0": "Captures assorted aquatic life. Use bait to boost production.",
+  "info.thermal.device_fisher.0": "Captures assorted aquatic life. Use bait to boost production and adjust what is caught.",
   "info.thermal.device_fisher.1": "Must be placed in a body of water.",
   "info.thermal.device_fisher.2": "Hang up your fishing rod.",
 

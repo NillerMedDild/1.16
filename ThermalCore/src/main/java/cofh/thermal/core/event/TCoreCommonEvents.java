@@ -41,4 +41,18 @@ public class TCoreCommonEvents {
         }
     }
 
+    //    @SubscribeEvent(priority = EventPriority.LOW)
+    //    public static void handleItemFishedEvent(ItemFishedEvent event) {
+    //
+    //        if (event.isCanceled()) {
+    //            return;
+    //        }
+    //        FishingBobberEntity hook = event.getHookEntity();
+    //        Entity angler = hook.func_234616_v_();
+    //        if (!(angler instanceof PlayerEntity)) {
+    //            return;
+    //        }
+    //        PlayerEntity player = (PlayerEntity) angler;
+    //    }
+
 }

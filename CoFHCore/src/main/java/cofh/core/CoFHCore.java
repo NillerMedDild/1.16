@@ -81,8 +81,6 @@ public class CoFHCore {
         // PARTICLES.register(modEventBus);
         TILE_ENTITIES.register(modEventBus);
 
-        CoreConfig.register();
-
         CoreBlocks.register();
         CoreFluids.register();
         CoreItems.register();
@@ -121,6 +119,8 @@ public class CoFHCore {
 
     // region INITIALIZATION
     private void commonSetup(final FMLCommonSetupEvent event) {
+
+        CoreConfig.register();
 
         CapabilityAreaEffect.register();
         CapabilityArchery.register();
