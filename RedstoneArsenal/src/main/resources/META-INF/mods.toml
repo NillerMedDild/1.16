@@ -18,14 +18,14 @@ Redstone Arsenal!
 [[dependencies.redstone_arsenal]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.16.3,)"
+versionRange = "[1.16.5,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.redstone_arsenal]]
 modId = "forge"
 mandatory = true
-versionRange = "[35.1.0,)"
+versionRange = "[36.2.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
