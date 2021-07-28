@@ -5,5 +5,5 @@
   },
   "loot_table": "thermal:gameplay/fishing/deep",
   "output_mod": 1.75,
-  "use_chance": 0.45
+  "use_chance": 0.4
 }

@@ -22,8 +22,8 @@ public class OMGLootTableProvider extends LootTableProviderCoFH {
     protected void addTables() {
 
         for (int i = 1; i <= 24; ++i) {
-            lootTables.put(BLOCKS.get("carved_pumpkin_" + i), getSimpleDropTable(BLOCKS.get("carved_pumpkin_" + i)));
-            lootTables.put(BLOCKS.get("jack_o_lantern_" + i), getSimpleDropTable(BLOCKS.get("jack_o_lantern_" + i)));
+            blockLootTables.put(BLOCKS.get("carved_pumpkin_" + i), getSimpleDropTable(BLOCKS.get("carved_pumpkin_" + i)));
+            blockLootTables.put(BLOCKS.get("jack_o_lantern_" + i), getSimpleDropTable(BLOCKS.get("jack_o_lantern_" + i)));
         }
     }
 

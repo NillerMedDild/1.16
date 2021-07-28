@@ -65,7 +65,7 @@ public class TCulLootTableProvider extends LootTableProviderCoFH {
         createMushroomTable(ID_REDSTONE_MUSHROOM, Items.REDSTONE);
         createMushroomTable(ID_SLIME_MUSHROOM, Items.SLIME_BALL);
 
-        lootTables.put(regBlocks.get(ID_FROST_MELON),
+        blockLootTables.put(regBlocks.get(ID_FROST_MELON),
                 BlockLootTables.droppingWithSilkTouch(regBlocks.get(ID_FROST_MELON),
                         BlockLootTables.withExplosionDecay(regBlocks.get(ID_FROST_MELON),
                                 ItemLootEntry.builder(regItems.get(ID_FROST_MELON_SLICE))
@@ -73,16 +73,16 @@ public class TCulLootTableProvider extends LootTableProviderCoFH {
                                         .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE))
                                         .acceptFunction(LimitCount.func_215911_a(IntClamper.func_215851_b(9))))));
 
-        lootTables.put(regBlocks.get(ID_FROST_MELON_STEM),
+        blockLootTables.put(regBlocks.get(ID_FROST_MELON_STEM),
                 BlockLootTables.droppingByAge(regBlocks.get(ID_FROST_MELON_STEM),
                         regItems.get(seeds(ID_FROST_MELON))));
 
-        lootTables.put(regBlocks.get(ID_FROST_MELON_STEM_ATTACHED),
+        blockLootTables.put(regBlocks.get(ID_FROST_MELON_STEM_ATTACHED),
                 BlockLootTables.dropSeedsForStem(regBlocks.get(ID_FROST_MELON_STEM),
                         regItems.get(seeds(ID_FROST_MELON))));
 
-        lootTables.put(regBlocks.get(ID_PHYTOSOIL), getSimpleDropTable(regBlocks.get(ID_PHYTOSOIL)));
-        lootTables.put(regBlocks.get(ID_PHYTOSOIL_TILLED), getSimpleDropTable(regBlocks.get(ID_PHYTOSOIL)));
+        blockLootTables.put(regBlocks.get(ID_PHYTOSOIL), getSimpleDropTable(regBlocks.get(ID_PHYTOSOIL)));
+        blockLootTables.put(regBlocks.get(ID_PHYTOSOIL_TILLED), getSimpleDropTable(regBlocks.get(ID_PHYTOSOIL)));
 
         createSimpleDropTable(regBlocks.get(block(ID_BARLEY)));
         createSimpleDropTable(regBlocks.get(block(ID_BELL_PEPPER)));
@@ -102,33 +102,33 @@ public class TCulLootTableProvider extends LootTableProviderCoFH {
         createSimpleDropTable(regBlocks.get(block(ID_TEA)));
         createSimpleDropTable(regBlocks.get(block(ID_TOMATO)));
 
-        lootTables.put(regBlocks.get(ID_CHOCOLATE_CAKE), getEmptyTable());
-        lootTables.put(regBlocks.get(ID_SPICE_CAKE), getEmptyTable());
+        blockLootTables.put(regBlocks.get(ID_CHOCOLATE_CAKE), getEmptyTable());
+        blockLootTables.put(regBlocks.get(ID_SPICE_CAKE), getEmptyTable());
     }
 
     protected void createCropTable(String id) {
 
-        lootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_7, 7));
+        blockLootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_7, 7));
     }
 
     protected void createFlaxCropTable(String id) {
 
-        lootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_6, 6));
+        blockLootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_6, 6));
     }
 
     protected void createMushroomTable(String id, Item drop) {
 
-        lootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), drop, ITEMS.get(spores(id)), AGE_0_4, 4));
+        blockLootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), drop, ITEMS.get(spores(id)), AGE_0_4, 4));
     }
 
     protected void createTallCropTable(String id) {
 
-        lootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_9, 9));
+        blockLootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_9, 9));
     }
 
     protected void createPerennialCropTable(String id) {
 
-        lootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_10, 10));
+        blockLootTables.put(BLOCKS.get(id), getCropTable(BLOCKS.get(id), ITEMS.get(id), ITEMS.get(seeds(id)), AGE_0_10, 10));
     }
 
 }

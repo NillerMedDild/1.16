@@ -47,7 +47,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
 
     public static final BiPredicate<ItemStack, List<ItemStack>> AUG_VALIDATOR = createAllowValidator(TAG_AUGMENT_TYPE_UPGRADE, TAG_AUGMENT_TYPE_AREA_EFFECT, TAG_AUGMENT_TYPE_FILTER);
 
-    protected static int timeConstant = 7200;
+    protected static int timeConstant = 3600;
     protected static int minTimeConstant = timeConstant / 20;
     protected static int timeReductionWater = 20;
 
@@ -218,7 +218,7 @@ public class DeviceFisherTile extends DeviceTileBase implements ITickableTileEnt
         int constant = timeConstant;
 
         BlockPos areaPos = pos.offset(getBlockState().get(FACING_HORIZONTAL), radius);
-        Iterable<BlockPos> area = BlockPos.getAllInBoxMutable(areaPos.add(-radius, 1 - radius, -radius), areaPos.add(radius, 0, radius));
+        Iterable<BlockPos> area = BlockPos.getAllInBoxMutable(areaPos.add(-radius, 1 - radius, -radius), areaPos.add(radius, -1 + radius, radius));
 
         for (BlockPos scan : area) {
             FluidState state = world.getFluidState(scan);

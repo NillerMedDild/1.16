@@ -35,7 +35,7 @@ public abstract class LootTableProviderCoFH extends LootTableProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
-    protected final Map<Block, LootTable.Builder> lootTables = new HashMap<>();
+    protected final Map<Block, LootTable.Builder> blockLootTables = new HashMap<>();
     private final DataGenerator generator;
 
     public LootTableProviderCoFH(DataGenerator gen) {
@@ -48,12 +48,12 @@ public abstract class LootTableProviderCoFH extends LootTableProvider {
 
     protected void createSimpleDropTable(Block block) {
 
-        lootTables.put(block, getSimpleDropTable(block));
+        blockLootTables.put(block, getSimpleDropTable(block));
     }
 
     protected void createSyncDropTable(Block block) {
 
-        lootTables.put(block, getSyncDropTable(block));
+        blockLootTables.put(block, getSyncDropTable(block));
     }
 
     // region TABLE HELPERS
@@ -159,7 +159,7 @@ public abstract class LootTableProviderCoFH extends LootTableProvider {
         addTables();
 
         Map<ResourceLocation, LootTable> tables = new HashMap<>();
-        for (Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet()) {
+        for (Map.Entry<Block, LootTable.Builder> entry : blockLootTables.entrySet()) {
             tables.put(entry.getKey().getLootTable(), entry.getValue().setParameterSet(LootParameterSets.BLOCK).build());
         }
         writeTables(cache, tables);

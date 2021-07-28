@@ -194,7 +194,7 @@ public class ThermalConfig {
         if (getFlag(ID_DEVICE_FISHER).getAsBoolean()) {
             deviceFisherTimeConstant = SERVER_CONFIG
                     .comment("This sets the base time constant (in ticks) for the Aquatic Entangler.")
-                    .defineInRange("Time Constant", 3600, 400, 36000);
+                    .defineInRange("Time Constant", 7200, 400, 36000);
             deviceFisherTimeReductionWater = SERVER_CONFIG
                     .comment("This sets the time constant reduction (in ticks) per nearby Water source block for the Aquatic Entangler.")
                     .defineInRange("Water Source Time Constant Reduction", 20, 1, 100);
