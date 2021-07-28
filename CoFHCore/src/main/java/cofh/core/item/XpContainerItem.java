@@ -1,5 +1,6 @@
 package cofh.core.item;
 
+import cofh.lib.fluid.FluidContainerItemWrapper;
 import cofh.lib.fluid.IFluidContainerItem;
 import cofh.lib.item.ContainerType;
 import cofh.lib.util.Utils;
@@ -8,10 +9,12 @@ import cofh.lib.xp.IXpContainerItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -119,6 +122,12 @@ public class XpContainerItem extends ItemCoFH implements IXpContainerItem, IFlui
         return ActionResult.resultSuccess(stack);
     }
 
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+
+        return new FluidContainerItemWrapper(stack, this);
+    }
+
     // region IXpContainerItem
     public int getCapacityXP(ItemStack stack) {
 
@@ -126,7 +135,6 @@ public class XpContainerItem extends ItemCoFH implements IXpContainerItem, IFlui
     }
     // endregion
 
-    // TODO: Implicit conversion?
     // region IFluidContainerItem
     @Override
     public FluidStack getFluid(ItemStack container) {
